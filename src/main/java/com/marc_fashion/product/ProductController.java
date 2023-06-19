@@ -1,10 +1,8 @@
 package com.marc_fashion.product;
 
+import com.marc_fashion.search.FilterRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,7 +15,7 @@ public class ProductController {
     public List<ProductDTO> getAllProduct(){
         return this.productService.getAllProduct();
     }
-    @GetMapping("category/{id}")
+    @GetMapping("/category/{id}")
     public List<ProductDTO> getProductByCategoryId(@PathVariable Long id){
         return productService.getProductByCategoryId(id);
     }
