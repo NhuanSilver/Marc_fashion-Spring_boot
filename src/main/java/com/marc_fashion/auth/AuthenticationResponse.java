@@ -9,7 +9,8 @@ import java.util.List;
 @Builder
 public class AuthenticationResponse {
     private String username;
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private List<String> authorities;
     private String token;
     private String refreshToken;

@@ -15,19 +15,19 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
-    private String fullName;
+    private String firstName;
+    private String lastName;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable( name = "user_role",joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns =  @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_role",joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns =  @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
     @Override

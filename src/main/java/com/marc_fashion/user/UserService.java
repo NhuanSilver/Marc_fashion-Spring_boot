@@ -43,7 +43,8 @@ public class UserService implements IUserService {
         var refreshToken = jwtService.generateRefreshToken(user);
         return AuthenticationResponse.builder()
                 .username(user.getUsername())
-                .fullName(user.getFullName())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .token(jwtToken)
                 .refreshToken(refreshToken)
                 .authorities(authorities)
@@ -56,7 +57,8 @@ public class UserService implements IUserService {
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .fullName(request.getFullName())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
                 .roles(List.of(roleUser))
                 .build();
         return userMapper.toDTO(userRepository.save(user));

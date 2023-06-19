@@ -22,8 +22,6 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors()
                 .and()
-                .exceptionHandling()
-                .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**").hasAnyAuthority("USER")
                 .requestMatchers("/api/v1/auth/admin/**").hasAuthority("ADMIN")

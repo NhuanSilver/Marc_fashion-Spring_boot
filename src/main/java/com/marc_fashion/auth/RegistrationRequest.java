@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class RegistrationRequest {
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private String username;
     private String password;
 }
