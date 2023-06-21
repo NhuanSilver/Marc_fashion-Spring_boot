@@ -53,6 +53,8 @@ public class UserService implements IUserService {
 
     @Override
     public UserDTO register(RegistrationRequest request) {
+        boolean isUsernameExist = userRepository.existsByUsername(request.getUsername());
+        if (isUsernameExist) throw new RuntimeException();
         Role roleUser = roleRepository.findByName("USER").orElseThrow();
         User user = User.builder()
                 .username(request.getUsername())

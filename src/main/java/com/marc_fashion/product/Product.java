@@ -25,7 +25,7 @@ public class Product {
     private Category category;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<ProductVariant> variants;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
     private List<Image> images;
 
 }

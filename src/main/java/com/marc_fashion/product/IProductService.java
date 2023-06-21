@@ -1,7 +1,5 @@
 package com.marc_fashion.product;
 
-import com.marc_fashion.search.FilterRequest;
-
 import java.util.List;
 
 public interface IProductService {
@@ -9,4 +7,8 @@ public interface IProductService {
     ProductDTO getProductById(Long id);
 
     List<ProductDTO> getProductByCategoryId(Long id);
+
+    ProductDTO createNewProduct(CreateOrUpdateRequest request);
+    void deleteProduct(Long id);
+    ProductDTO updateProduct(Long id, CreateOrUpdateRequest request);
 }

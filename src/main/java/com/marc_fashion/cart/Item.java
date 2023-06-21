@@ -1,5 +1,6 @@
-package com.marc_fashion.product;
+package com.marc_fashion.cart;
 
+import com.marc_fashion.product.ProductVariant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,17 +9,16 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductVariant {
+@Builder
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String color;
-    private String size;
+    private Integer quantity;
+    @OneToOne
+    private ProductVariant variant;
     @ManyToOne
-    private Product product;
-    @ManyToOne
-    private Image image;
+    private Cart cart;
 }

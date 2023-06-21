@@ -1,15 +1,10 @@
 package com.marc_fashion.product;
 
-import com.marc_fashion.search.FilterRequest;
-import com.marc_fashion.search.FilterSpecification;
-import com.marc_fashion.search.SortType;
+import com.marc_fashion.category.Category;
+import com.marc_fashion.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +13,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductService implements IProductService {
     private final ProductRepository repository;
+    private final CategoryRepository categoryRepository;
     private final ProductDTOMapper mapper;
 
     @Override
@@ -36,7 +32,6 @@ public class ProductService implements IProductService {
     }
 
 
-
     @Override
     public List<ProductDTO> getProductByCategoryId(Long id) {
         List<Product> products = repository.findByCategoryId(id);
@@ -45,5 +40,87 @@ public class ProductService implements IProductService {
                 .stream()
                 .map(mapper::toProductDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public ProductDTO createNewProduct(CreateOrUpdateRequest request) {
+        Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow();
+        Product product = Product.builder()
+                .name(request.getName())
+                .price(request.getPrice())
+                .category(category)
+                .build();
+        List<Image> images = request.getImages()
+                .stream()
+                .map(image ->
+                             Image.builder()
+                                    .product(product)
+                                    .src(image)
+                                    .build()
+
+                )
+                .collect(Collectors.toList());
+        List<ProductVariant> variants = request.getVariants()
+                .stream()
+                .map(variant ->
+                        ProductVariant.builder()
+                                .product(product)
+                                .color(variant.getColor())
+                                .size(variant.getSize())
+                                .build()
+                )
+                .collect(Collectors.toList());
+        product.setVariants(variants);
+        product.setImages(images);
+        return mapper.toProductDTO(repository.save(product));
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        if (repository.existsById(id)){
+            repository.deleteById(id);
+            return;
+        }
+        throw new RuntimeException();
+    }
+
+    @Override
+    public ProductDTO updateProduct(Long id, CreateOrUpdateRequest request) {
+        Product product = repository.findById(id).orElseThrow();
+        if ((request.getImages() != null && !request.getImages().isEmpty())){
+            List<Image> images = request.getImages()
+                    .stream()
+                    .map(image ->
+                            Image.builder()
+                                    .product(product)
+                                    .src(image)
+                                    .build()
+
+                    )
+                    .collect(Collectors.toList());
+            product.setImages(images);
+        }
+        if (request.getVariants() != null && !request.getVariants().isEmpty()){
+            List<ProductVariant> variants = request.getVariants()
+                    .stream()
+                    .map(variant ->
+                            ProductVariant.builder()
+                                    .product(product)
+                                    .color(variant.getColor())
+                                    .size(variant.getSize())
+                                    .build()
+                    )
+                    .collect(Collectors.toList());
+            product.setVariants(variants);
+        }
+        if (request.getCategoryId() != null){
+            Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow();
+            product.setCategory(category);
+        }
+        if (request.getName() != null) product.setName(request.getName());
+        if (request.getPrice() != null) product.setPrice(request.getPrice());
+
+        return mapper.toProductDTO(repository.save(product));
     }
 }

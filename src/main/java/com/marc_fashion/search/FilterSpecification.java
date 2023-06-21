@@ -20,7 +20,7 @@ public class FilterSpecification<T>{
         return ((root, query, criteriaBuilder) -> {
             query.distinct(true);
             if (sizes != null && !sizes.isEmpty()){
-                return criteriaBuilder.isTrue(root.get("productVariants").get("size").in(sizes));
+                return criteriaBuilder.isTrue(root.get("variants").get("size").in(sizes));
             }
             return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
         });
@@ -29,7 +29,7 @@ public class FilterSpecification<T>{
         return ((root, query, criteriaBuilder) -> {
             query.distinct(true);
             if (colors != null && !colors.isEmpty()){
-                return criteriaBuilder.isTrue(root.get("productVariants").get("color").in(colors));
+                return criteriaBuilder.isTrue(root.get("variants").get("color").in(colors));
             }
             return criteriaBuilder.isTrue(criteriaBuilder.literal(true));
         });
