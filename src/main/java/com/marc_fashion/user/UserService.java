@@ -45,7 +45,7 @@ public class UserService implements IUserService {
                 .username(user.getUsername())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
-                .token(jwtToken)
+                .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .authorities(authorities)
                 .build();

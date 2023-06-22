@@ -10,28 +10,39 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final IProductService productService;
+
     @GetMapping
-    public List<ProductDTO> getAllProduct(){
+    public List<ProductDTO> getAllProduct() {
         return this.productService.getAllProduct();
     }
+
     @GetMapping("/category/{id}")
-    public List<ProductDTO> getProductByCategoryId(@PathVariable Long id){
+    public List<ProductDTO> getProductByCategoryId(@PathVariable Long id) {
         return productService.getProductByCategoryId(id);
     }
+
     @GetMapping("/{id}")
-    public ProductDTO getProductById(@PathVariable Long id){
+    public ProductDTO getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
+
+    @GetMapping("/variant/{id}")
+    public ProductDTO getProductByVariantId(@PathVariable Long id) {
+        return productService.getProductByVariantId(id);
+    }
+
     @PostMapping
-    public ProductDTO createNewProduct(@RequestBody CreateOrUpdateRequest request){
+    public ProductDTO createNewProduct(@RequestBody CreateOrUpdateRequest request) {
         return productService.createNewProduct(request);
     }
+
     @PutMapping("/{id}")
-    public ProductDTO updateProduct(@PathVariable Long id, @RequestBody CreateOrUpdateRequest updateRequest){
+    public ProductDTO updateProduct(@PathVariable Long id, @RequestBody CreateOrUpdateRequest updateRequest) {
         return productService.updateProduct(id, updateRequest);
     }
+
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id){
-         productService.deleteProduct(id);
+    public void deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
     }
 }

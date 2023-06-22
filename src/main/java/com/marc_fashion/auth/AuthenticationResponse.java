@@ -12,6 +12,6 @@ public class AuthenticationResponse {
     private String firstName;
     private String lastName;
     private List<String> authorities;
-    private String token;
+    private String accessToken;
     private String refreshToken;
 }

@@ -11,4 +11,5 @@ public interface IProductService {
     ProductDTO createNewProduct(CreateOrUpdateRequest request);
     void deleteProduct(Long id);
     ProductDTO updateProduct(Long id, CreateOrUpdateRequest request);
+    ProductDTO getProductByVariantId(Long variantId);
 }

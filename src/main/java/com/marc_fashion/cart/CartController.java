@@ -3,18 +3,20 @@ package com.marc_fashion.cart;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/carts")
 @RequiredArgsConstructor
 public class CartController {
     private final ICartService cartService;
     @GetMapping("/user")
-    public CartDTO getCartByCurrentUser(){
+    public List<ItemDTO> getCartByCurrentUser(){
         return cartService.getCartByCurrentUser();
     }
 
     @PostMapping
-    public CartDTO addToCart(@RequestBody AddToCartRequest request){
+    public List<ItemDTO> addToCart(@RequestBody AddToCartRequest request){
        return this.cartService.addToCart(request);
     }
     @PutMapping("/item/{id}/plus")

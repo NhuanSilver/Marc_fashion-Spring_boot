@@ -1,4 +1,5 @@
 package com.marc_fashion.cart;
+
 import com.marc_fashion.product.ProductVariant;
 import com.marc_fashion.product.ProductVariantRepository;
 import com.marc_fashion.user.User;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -16,14 +18,13 @@ import java.util.List;
 public class CartService implements ICartService {
     private final CartRepository cartRepository;
     private final ItemRepository itemRepository;
-    private final CartDTOMapper cartDTOMapper;
     private final ProductVariantRepository variantRepository;
     private final ItemDTOMapper itemDTOMapper;
 
 
     @Override
     @Transactional
-    public CartDTO addToCart(AddToCartRequest request) {
+    public List<ItemDTO> addToCart(AddToCartRequest request) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ProductVariant variant = variantRepository.findById(request.getVariantId()).orElseThrow();
         Cart cart = cartRepository.findByUserId(user.getId()).orElse(null);
@@ -52,9 +53,12 @@ public class CartService implements ICartService {
                     .user(user)
                     .build();
             item.setCart(cart);
-
         }
-        return cartDTOMapper.toDTO(cartRepository.save(cart));
+        List<ItemDTO> itemDTOS = cartRepository.save(cart).getItems()
+                .stream()
+                .map(itemDTOMapper::toDTO)
+                .collect(Collectors.toList());
+        return itemDTOS;
 
     }
 
@@ -76,16 +80,22 @@ public class CartService implements ICartService {
 
     @Override
     public void removeItem(Long itemId) {
-       boolean isExist = itemRepository.existsById(itemId);
-       if (!isExist) throw new RuntimeException();
-       itemRepository.deleteById(itemId);
+        boolean isExist = itemRepository.existsById(itemId);
+        if (!isExist) throw new RuntimeException();
+        itemRepository.deleteById(itemId);
     }
 
     @Override
-    public CartDTO getCartByCurrentUser() {
+    public List<ItemDTO> getCartByCurrentUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Cart cart = cartRepository.findByUserId(user.getId()).orElse(null);
-        if (cart != null) return cartDTOMapper.toDTO(cart);
+        if (cart != null) {
+            List<ItemDTO> itemDTOS = cartRepository.save(cart).getItems()
+                    .stream()
+                    .map(itemDTOMapper::toDTO)
+                    .collect(Collectors.toList());
+            return itemDTOS;
+        }
         return null;
     }
 }

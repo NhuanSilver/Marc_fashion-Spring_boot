@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 public class ProductService implements IProductService {
     private final ProductRepository repository;
     private final CategoryRepository categoryRepository;
+    private final ProductVariantRepository variantRepository;
+    private final ImageRepository imageRepository;
     private final ProductDTOMapper mapper;
 
     @Override
@@ -77,12 +79,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    @Transactional
     public void deleteProduct(Long id) {
-        if (repository.existsById(id)){
-            repository.deleteById(id);
-            return;
-        }
-        throw new RuntimeException();
+        Product product = repository.findById(id).orElseThrow();
+        product.getImages().forEach(image -> imageRepository.delete(image));
+        repository.delete(product);
     }
 
     @Override
@@ -122,5 +123,12 @@ public class ProductService implements IProductService {
         if (request.getPrice() != null) product.setPrice(request.getPrice());
 
         return mapper.toProductDTO(repository.save(product));
+    }
+
+    @Override
+    public ProductDTO getProductByVariantId(Long variantId) {
+        ProductVariant variant = variantRepository.findById(variantId).orElseThrow();
+        Product product = variant.getProduct();
+        return mapper.toProductDTO(product);
     }
 }
