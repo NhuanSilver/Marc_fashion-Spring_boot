@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .cors()
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/carts/**").hasAnyAuthority("USER")
+                .requestMatchers("/api/v1/carts/**","/api/v1/orders/**" ).hasAnyAuthority("USER")
                 .requestMatchers("/api/v1/auth/admin/**").hasAuthority("ADMIN")
                 .requestMatchers("/auth/**")
                 .authenticated()
