@@ -1,5 +1,6 @@
 package com.marc_fashion.cart;
 
+import com.marc_fashion.product.Product;
 import com.marc_fashion.product.ProductVariant;
 import com.marc_fashion.product.ProductVariantRepository;
 import com.marc_fashion.user.User;
@@ -20,14 +21,16 @@ public class CartService implements ICartService {
     private final ItemRepository itemRepository;
     private final ProductVariantRepository variantRepository;
     private final ItemDTOMapper itemDTOMapper;
+    private final CartDTOMapper cartDTOMapper;
 
 
     @Override
     @Transactional
-    public List<ItemDTO> addToCart(AddToCartRequest request) {
+    public CartDTO addToCart(AddToCartRequest request) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ProductVariant variant = variantRepository.findById(request.getVariantId()).orElseThrow();
         Cart cart = cartRepository.findByUserId(user.getId()).orElse(null);
+        Product product = variant.getProduct();
         if (cart != null) {
             Item item = cart.getItems()
                     .stream()
@@ -38,6 +41,7 @@ public class CartService implements ICartService {
             } else {
                 item = Item.builder()
                         .variant(variant)
+                        .product(product)
                         .quantity(request.getQuantity())
                         .cart(cart)
                         .build();
@@ -46,6 +50,7 @@ public class CartService implements ICartService {
         } else {
             Item item = Item.builder()
                     .variant(variant)
+                    .product(product)
                     .quantity(request.getQuantity())
                     .build();
             cart = Cart.builder()
@@ -54,11 +59,8 @@ public class CartService implements ICartService {
                     .build();
             item.setCart(cart);
         }
-        List<ItemDTO> itemDTOS = cartRepository.save(cart).getItems()
-                .stream()
-                .map(itemDTOMapper::toDTO)
-                .collect(Collectors.toList());
-        return itemDTOS;
+
+        return cartDTOMapper.toDTO(cartRepository.save(cart));
 
     }
 
@@ -86,16 +88,9 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public List<ItemDTO> getCartByCurrentUser() {
+    public CartDTO getCartByCurrentUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Cart cart = cartRepository.findByUserId(user.getId()).orElse(null);
-        if (cart != null) {
-            List<ItemDTO> itemDTOS = cartRepository.save(cart).getItems()
-                    .stream()
-                    .map(itemDTOMapper::toDTO)
-                    .collect(Collectors.toList());
-            return itemDTOS;
-        }
-        return null;
+        Cart cart = cartRepository.findByUserId(user.getId()).orElseThrow();
+        return cartDTOMapper.toDTO(cart);
     }
 }

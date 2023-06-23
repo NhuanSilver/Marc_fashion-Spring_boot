@@ -11,12 +11,12 @@ import java.util.List;
 public class CartController {
     private final ICartService cartService;
     @GetMapping("/user")
-    public List<ItemDTO> getCartByCurrentUser(){
+    public CartDTO getCartByCurrentUser(){
         return cartService.getCartByCurrentUser();
     }
 
     @PostMapping
-    public List<ItemDTO> addToCart(@RequestBody AddToCartRequest request){
+    public CartDTO addToCart(@RequestBody AddToCartRequest request){
        return this.cartService.addToCart(request);
     }
     @PutMapping("/item/{id}/plus")

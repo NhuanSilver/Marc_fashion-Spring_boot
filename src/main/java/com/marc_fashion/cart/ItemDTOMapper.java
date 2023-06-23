@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 public class ItemDTOMapper {
     private final ModelMapper modelMapper;
     public ItemDTO toDTO(Item item){
-        ItemDTO i = modelMapper.map(item, ItemDTO.class);
-        i.setVariantId(item.getVariant().getId());
-        return i;
+        return modelMapper.map(item, ItemDTO.class);
     }
 }

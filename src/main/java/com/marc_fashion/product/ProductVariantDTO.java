@@ -7,4 +7,5 @@ public class ProductVariantDTO {
     private Long id;
     private String color;
     private String size;
+    private ImageDTO image;
 }

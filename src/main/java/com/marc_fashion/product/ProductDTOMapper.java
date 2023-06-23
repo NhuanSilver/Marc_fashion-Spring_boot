@@ -12,17 +12,6 @@ import java.util.stream.Collectors;
 public class ProductDTOMapper {
     private final ModelMapper modelMapper;
     public ProductDTO toProductDTO(Product product){
-        List<ProductVariantDTO> variantDTOs = product.getVariants()
-                .stream()
-                .map(productVariant -> modelMapper.map(productVariant, ProductVariantDTO.class))
-                .collect(Collectors.toList());
-        List<ImageDTO> imageDTOS = product.getImages()
-                .stream()
-                .map(image -> modelMapper.map(image, ImageDTO.class))
-                .collect(Collectors.toList());
-        ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
-        productDTO.setVariants(variantDTOs);
-        productDTO.setImages(imageDTOS);
-        return productDTO;
+        return modelMapper.map(product, ProductDTO.class);
     }
 }
