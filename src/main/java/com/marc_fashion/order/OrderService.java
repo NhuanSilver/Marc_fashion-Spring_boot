@@ -2,6 +2,7 @@ package com.marc_fashion.order;
 
 import com.marc_fashion.cart.Cart;
 import com.marc_fashion.cart.CartRepository;
+import com.marc_fashion.exception.NotFoundException;
 import com.marc_fashion.user.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ public class OrderService implements IOrderService {
     @Override
     public OrderDTO placeOrder(PlaceOrder request) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (user == null) throw new RuntimeException();
+        if (user == null) throw new NotFoundException("user not found");
         Cart cart = cartRepository.findByUserId(user.getId()).orElseThrow();
 
         Order order = Order.builder()

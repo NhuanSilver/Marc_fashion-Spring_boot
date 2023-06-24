@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private final UserService userService;
+    private final IAuthenticationService authenticationService;
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody LoginRequest request){
-        return userService.login(request);
+        return authenticationService.login(request);
     }
     @PostMapping("/register")
     public UserDTO register(@RequestBody RegistrationRequest request){
-        return userService.register(request);
+        return authenticationService.register(request);
     }
 
 }

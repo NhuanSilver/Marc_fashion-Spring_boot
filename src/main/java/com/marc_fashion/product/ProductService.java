@@ -2,6 +2,7 @@ package com.marc_fashion.product;
 
 import com.marc_fashion.category.Category;
 import com.marc_fashion.category.CategoryRepository;
+import com.marc_fashion.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,7 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductDTO getProductById(Long id) {
-        return mapper.toProductDTO(repository.findById(id).orElseThrow());
+        return mapper.toProductDTO(repository.findById(id).orElseThrow(()->new NotFoundException("product does not exist")));
     }
 
 
@@ -47,7 +48,8 @@ public class ProductService implements IProductService {
     @Override
     @Transactional
     public ProductDTO createNewProduct(CreateOrUpdateRequest request) {
-        Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow();
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(()-> new NotFoundException("Category not found"));
         Product product = Product.builder()
                 .name(request.getName())
                 .price(request.getPrice())
@@ -81,14 +83,14 @@ public class ProductService implements IProductService {
     @Override
     @Transactional
     public void deleteProduct(Long id) {
-        Product product = repository.findById(id).orElseThrow();
-        product.getImages().forEach(image -> imageRepository.delete(image));
+        Product product = repository.findById(id).orElseThrow(()->new NotFoundException("product does not exist"));
+        imageRepository.deleteAll(product.getImages());
         repository.delete(product);
     }
 
     @Override
     public ProductDTO updateProduct(Long id, CreateOrUpdateRequest request) {
-        Product product = repository.findById(id).orElseThrow();
+        Product product = repository.findById(id).orElseThrow(()->new NotFoundException("product does not exist"));
         if ((request.getImages() != null && !request.getImages().isEmpty())){
             List<Image> images = request.getImages()
                     .stream()
@@ -116,7 +118,7 @@ public class ProductService implements IProductService {
             product.setVariants(variants);
         }
         if (request.getCategoryId() != null){
-            Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow();
+            Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(()->new NotFoundException("category does not exist"));
             product.setCategory(category);
         }
         if (request.getName() != null) product.setName(request.getName());
@@ -127,7 +129,7 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductDTO getProductByVariantId(Long variantId) {
-        ProductVariant variant = variantRepository.findById(variantId).orElseThrow();
+        ProductVariant variant = variantRepository.findById(variantId).orElseThrow(()->new NotFoundException("variant does not exist"));
         Product product = variant.getProduct();
         return mapper.toProductDTO(product);
     }

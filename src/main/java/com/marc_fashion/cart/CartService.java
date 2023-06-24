@@ -1,17 +1,17 @@
 package com.marc_fashion.cart;
 
+import com.marc_fashion.exception.InvalidException;
+import com.marc_fashion.exception.NotFoundException;
 import com.marc_fashion.product.Product;
 import com.marc_fashion.product.ProductVariant;
 import com.marc_fashion.product.ProductVariantRepository;
 import com.marc_fashion.user.User;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -28,7 +28,9 @@ public class CartService implements ICartService {
     @Transactional
     public CartDTO addToCart(AddToCartRequest request) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        ProductVariant variant = variantRepository.findById(request.getVariantId()).orElseThrow();
+        if(user == null) throw  new NotFoundException("User not found");
+        ProductVariant variant = variantRepository.findById(request.getVariantId())
+                .orElseThrow( ()-> new NotFoundException("variant not found"));
         Cart cart = cartRepository.findByUserId(user.getId()).orElse(null);
         Product product = variant.getProduct();
         if (cart != null) {
@@ -66,16 +68,17 @@ public class CartService implements ICartService {
 
     @Override
     public ItemDTO plus(Long itemId, Integer quantity) {
-        Item item = itemRepository.findById(itemId).orElseThrow();
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException("item not found"));
         item.setQuantity(item.getQuantity() + quantity);
         return itemDTOMapper.toDTO(itemRepository.save(item));
     }
 
     @Override
     public ItemDTO minus(Long itemId, Integer quantity) {
-        Item item = itemRepository.findById(itemId).orElseThrow();
+        Item item = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("item not found"));
         Integer qty = item.getQuantity();
-        if (qty - quantity <= 0) throw new RuntimeException();
+        if (qty - quantity <= 0) throw new InvalidException("quantity must not smaller than 1");
         item.setQuantity(qty - quantity);
         return itemDTOMapper.toDTO(itemRepository.save(item));
     }
@@ -83,14 +86,14 @@ public class CartService implements ICartService {
     @Override
     public void removeItem(Long itemId) {
         boolean isExist = itemRepository.existsById(itemId);
-        if (!isExist) throw new RuntimeException();
+        if (!isExist) throw new NotFoundException("item does not exist");
         itemRepository.deleteById(itemId);
     }
 
     @Override
     public CartDTO getCartByCurrentUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Cart cart = cartRepository.findByUserId(user.getId()).orElseThrow();
+        Cart cart = cartRepository.findByUserId(user.getId()).orElseThrow(() -> new NotFoundException("cart does not exist"));
         return cartDTOMapper.toDTO(cart);
     }
 }
