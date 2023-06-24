@@ -6,6 +6,7 @@ import com.marc_fashion.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class AuthenticationService implements IAuthenticationService{
                 .orElseThrow();
         List<String> authorities = user.getAuthorities()
                 .stream()
-                .map(simpleAuthority -> simpleAuthority.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
@@ -52,13 +53,12 @@ public class AuthenticationService implements IAuthenticationService{
         boolean isUsernameExist = userRepository.existsByUsername(request.getUsername());
         if (isUsernameExist) throw new InvalidException("username is existed");
         Role roleUser = roleRepository.findByName("USER").orElseThrow(()-> new NotFoundException("role not found"));
-        Role roleAmin = roleRepository.findByName("ADMIN").orElseThrow(()-> new NotFoundException("role not found"));
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                .roles(List.of(roleUser, roleAmin))
+                .roles(List.of(roleUser))
                 .build();
         return userMapper.toDTO(userRepository.save(user));
     }
