@@ -1,5 +1,7 @@
 package com.marc_fashion.auth;
 
+import com.marc_fashion.exception.InvalidException;
+import com.marc_fashion.exception.NotFoundException;
 import com.marc_fashion.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,14 +50,15 @@ public class AuthenticationService implements IAuthenticationService{
     @Override
     public UserDTO register(RegistrationRequest request) {
         boolean isUsernameExist = userRepository.existsByUsername(request.getUsername());
-        if (isUsernameExist) throw new RuntimeException();
-        Role roleUser = roleRepository.findByName("USER").orElseThrow();
+        if (isUsernameExist) throw new InvalidException("username is existed");
+        Role roleUser = roleRepository.findByName("USER").orElseThrow(()-> new NotFoundException("role not found"));
+        Role roleAmin = roleRepository.findByName("ADMIN").orElseThrow(()-> new NotFoundException("role not found"));
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                .roles(List.of(roleUser))
+                .roles(List.of(roleUser, roleAmin))
                 .build();
         return userMapper.toDTO(userRepository.save(user));
     }

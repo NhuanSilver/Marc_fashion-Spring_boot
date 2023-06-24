@@ -1,6 +1,7 @@
 package com.marc_fashion.product;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,16 +33,19 @@ public class ProductController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ProductDTO createNewProduct(@RequestBody CreateOrUpdateRequest request) {
         return productService.createNewProduct(request);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ProductDTO updateProduct(@PathVariable Long id, @RequestBody CreateOrUpdateRequest updateRequest) {
         return productService.updateProduct(id, updateRequest);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
     }
