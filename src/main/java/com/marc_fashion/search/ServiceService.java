@@ -2,6 +2,7 @@ package com.marc_fashion.search;
 
 import com.marc_fashion.product.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ServiceService implements ISearchService {
     private final ProductDTOMapper mapper;
@@ -43,6 +45,22 @@ public class ServiceService implements ISearchService {
         return ProductPage.builder()
                 .totalPages(pageProduct.getTotalPages())
                 .totalElements(pageProduct.getTotalElements())
+                .products(products)
+                .build();
+    }
+
+    @Override
+    public ProductPage searchByProductName(String name, Integer page) {
+        page = page >= 1 ? page - 1 : page;
+        Pageable pageable = PageRequest.of(page, 8);
+        Page<Product> productPage = productRepository.findByNameIgnoreCaseContaining(name, pageable);
+        List<ProductDTO> products = productPage
+                .getContent()
+                .stream().map(mapper::toProductDTO)
+                .collect(Collectors.toList());
+        return ProductPage.builder()
+                .totalPages(productPage.getTotalPages())
+                .totalElements(productPage.getTotalElements())
                 .products(products)
                 .build();
     }
