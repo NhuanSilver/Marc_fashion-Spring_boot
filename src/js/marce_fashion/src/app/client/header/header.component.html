@@ -29,7 +29,7 @@
         <div class="relative user-tab" *ngIf="(isAuthenticated | async) == undefined">
           <span class="material-symbols-outlined pb-[-100px] text-3xl inline-block mr-5 cursor-pointer">account_circle</span>
           <div  class="absolute top-full left-[-10px] w-[100px]  bg-white px-2 pt-2 user-action"  >
-           <ul  class="">
+           <ul  class="font-mtd text-base">
              <li routerLink="dang-ky" class="py-2 cursor-pointer">Đăng ký</li>
              <li routerLink="dang-nhap" class="py-2 cursor-pointer">Đăng nhập</li>
            </ul>
@@ -38,7 +38,7 @@
         <div *ngIf="isAuthenticated | async as user"
               class="inline-block mr-5  cursor-pointer relative group">
           <span class="font-mtd text-lg" >{{user.firstName + " " + user.lastName}}</span>
-          <span (click)="logOut()" class="group-hover:inline-block absolute bg-white py-1 px-2 top-full left-0 hidden">Đăng xuất</span>
+          <span (click)="logOut()" class="group-hover:inline-block absolute text-base rounded font-mtd w-full bg-white py-1 px-2 top-full left-0 hidden">Đăng xuất</span>
         </div>
         <span class="material-symbols-outlined text-3xl inline-block mr-5 cursor-pointer">favorite</span>
        <div class="relative">
@@ -87,7 +87,20 @@
     </ul>
     <div class="flex items-center ">
       <span routerLink="/tim-kiem" class="material-symbols-outlined text-3xl inline-block mr-5 cursor-pointer">search</span>
-      <span class="material-symbols-outlined text-3xl inline-block mr-5 cursor-pointer">account_circle</span>
+      <div class="relative user-tab" *ngIf="(isAuthenticated | async) == undefined">
+        <span class="material-symbols-outlined pb-[-100px] text-3xl inline-block mr-5 cursor-pointer">account_circle</span>
+        <div  class="absolute top-full left-[-10px] w-[100px]  bg-white px-2 pt-2 user-action"  >
+          <ul  class="text-base">
+            <li routerLink="dang-ky" class="py-2 cursor-pointer">Đăng ký</li>
+            <li routerLink="dang-nhap" class="py-2 cursor-pointer">Đăng nhập</li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="isAuthenticated | async as user"
+           class="inline-block mr-5  cursor-pointer relative group">
+        <span class="font-mtd text-lg" >{{user.firstName + " " + user.lastName}}</span>
+        <span (click)="logOut()" class="group-hover:inline-block text-base rounded font-mtd w-full absolute bg-white py-1 px-2 top-full left-0 hidden">Đăng xuất</span>
+      </div>
       <span class="material-symbols-outlined text-3xl inline-block mr-5 cursor-pointer">favorite</span>
       <div class="relative">
         <span routerLink="/gio-hang" class="material-symbols-outlined text-3xl inline-block  cursor-pointer">local_mall</span>

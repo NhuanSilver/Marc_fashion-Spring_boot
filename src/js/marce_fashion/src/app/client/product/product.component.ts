@@ -6,6 +6,9 @@ import {SortType} from "../../model/product/SortType";
 import {FilterRequest} from "../../model/product/FilterRequest";
 import {SearchService} from "../../service/search.service";
 import {KeyValue} from "@angular/common";
+import {ActivatedRoute} from "@angular/router";
+import {Category} from "../../model/category/category";
+import {CategoryService} from "../../service/category.service";
 
 @Component({
   selector: 'app-product',
@@ -13,7 +16,10 @@ import {KeyValue} from "@angular/common";
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent {
-  pageProduct !: Observable<PageProduct>
+  pageProduct !: Observable<PageProduct>;
+  selectedCategoryIds : string[] = []
+  categoryId : string = '';
+  category$ !: Observable<Category>;
   isFilterBar: boolean = false;
   colors = this.productService.colorHandle;
   selectedColors = new Set<string>;
@@ -31,23 +37,29 @@ export class ProductComponent {
   currentType = SortType.DEFAULT
 
   constructor(private productService: ProductService,
-              private searchService : SearchService) {
+              private searchService : SearchService,
+              private activateRoute : ActivatedRoute,
+              private categoryService : CategoryService) {
   }
 
   ngOnInit(): void {
-    this.getAllProduct();
+    this.activateRoute.paramMap.subscribe( params =>{
+      this.categoryId = params.get('id') || '';
+      this.category$ = this.categoryService.getCategoryById(this.categoryId);
+      this.selectedCategoryIds = []
+      this.selectedCategoryIds.push(this.categoryId)
+      this.getProductByFilter();
+    })
   }
   getProductByFilter(){
     let request : FilterRequest = {
       colors : Array.from(this.selectedColors),
       sizes : Array.from(this.selectedSizes),
       page : 1,
+      cateIds : this.selectedCategoryIds,
       type : this.currentType
     }
     this.pageProduct = this.searchService.getProductByFilter(request)
-  }
-  private getAllProduct(): void {
-    this.pageProduct = this.productService.getALlProduct(1);
   }
 
   checkColorCheckBox(event: any) {

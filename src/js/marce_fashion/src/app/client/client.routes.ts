@@ -21,6 +21,7 @@ export const clientRoutes : Routes = [
       {path: 'san-pham/:id', component: ProductDetailsComponent},
       {path: 'gio-hang', component: CartComponent},
       {path: 'dat-hang', component: CheckoutComponent},
+      {path: 'tong-san-pham/:id', component: ProductComponent},
       {path: 'tong-san-pham', component: ProductComponent},
       {path: 'tim-kiem', component : SearchComponent}
     ]

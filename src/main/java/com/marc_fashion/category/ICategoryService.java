@@ -4,4 +4,6 @@ import java.util.List;
 
 public interface ICategoryService {
     List<Category> getAll();
+
+    Category getCategoryById(Long id);
 }

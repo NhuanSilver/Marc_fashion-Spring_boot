@@ -9,7 +9,8 @@
     <a href="" class="block my-5 text-lg text-red-500">Xem tất cả</a>
     <app-category-list></app-category-list>
     <section>
-      <div class="uppercase font-mtd text-3xl font-light my-5">tổng sản phẩm</div>
+      <div *ngIf="category$ | async as category" class="uppercase font-mtd text-3xl font-light my-5">{{category.name}}</div>
+      <div *ngIf="(category$ | async) == undefined" class="uppercase font-mtd text-3xl font-light my-5">tổng sản phẩm</div>
       <div class="flex justify-between  my-3">
         <div class="flex items-center cursor-pointer" (click)="isFilterBar = !isFilterBar">
           <span class="material-symbols-outlined mr-3">menu</span>
@@ -20,7 +21,7 @@
             <div>{{sortingTypes.get(currentType)}}</div>
             <span class="material-symbols-outlined">expand_more</span>
           </div>
-          <ul class=" group-hover:block absolute top-full right-0 hidden " [style.z-index]="10">
+          <ul class=" group-hover:block absolute top-full right-0 hidden bg-white p-3 rounded shadow " [style.z-index]="10">
               <li class="mt-2 cursor-pointer" (click)="sortChanged(type.key)" [style.color]="type.key === currentType ? 'red' : ''" *ngFor="let type of sortingTypes | keyvalue">{{type.value}}</li>
           </ul>
         </div>

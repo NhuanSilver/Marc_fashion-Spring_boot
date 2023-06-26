@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ProductService} from "../../../service/product.service";
 import {map, Observable} from "rxjs";
 import {Product} from "../../../model/product/Product";
 import {ProductVariant} from "../../../model/product/ProductVariant";
 import {CartService} from "../../../service/cart.service";
+import {StorageService} from "../../../service/storage.service";
 
 
 @Component({
@@ -24,13 +25,14 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private productService: ProductService,
-              private cartService : CartService) {
+              private cartService : CartService,
+              private storageService : StorageService,
+              private router : Router) {
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       let id = params['id'];
-      console.log(id)
       this.product$ = this.productService.getProductById(id).pipe(
         map((product) => {
           this.currentVariant = product.variants[0]
@@ -79,6 +81,9 @@ export class ProductDetailsComponent implements OnInit {
     return this.productService.handleColor(color);
   }
   public addToCart(variantId : number, quantity: number){
+    if (this.storageService.getUser() == null) {
+      this.router.navigate(['/dang-nhap'])
+    }
     this.cartService.addToCart(variantId, quantity).subscribe();
   }
 
