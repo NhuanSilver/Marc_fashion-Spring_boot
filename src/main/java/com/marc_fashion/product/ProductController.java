@@ -13,13 +13,13 @@ public class ProductController {
     private final IProductService productService;
 
     @GetMapping
-    public List<ProductDTO> getAllProduct() {
-        return this.productService.getAllProduct();
+    public ProductPage getAllProduct(@RequestParam(defaultValue = "1") Integer page) {
+        return this.productService.getAllProduct(page);
     }
 
     @GetMapping("/category/{id}")
-    public List<ProductDTO> getProductByCategoryId(@PathVariable Long id) {
-        return productService.getProductByCategoryId(id);
+    public ProductPage getProductByCategoryId(@PathVariable Long id, @RequestParam(defaultValue = "1") Integer page ) {
+        return productService.getProductByCategoryId(id, page);
     }
 
     @GetMapping("/{id}")

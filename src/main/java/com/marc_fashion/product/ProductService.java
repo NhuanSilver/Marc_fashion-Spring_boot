@@ -4,6 +4,9 @@ import com.marc_fashion.category.Category;
 import com.marc_fashion.category.CategoryRepository;
 import com.marc_fashion.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +23,19 @@ public class ProductService implements IProductService {
     private final ProductDTOMapper mapper;
 
     @Override
-    public List<ProductDTO> getAllProduct() {
-        List<Product> products = repository.findAll();
-
-        return products
-                .stream()
-                .map(mapper::toProductDTO)
+    public ProductPage getAllProduct(Integer page) {
+        page = page >= 1 ? page - 1 : page;
+        Pageable pageable = PageRequest.of(page, 8);
+        Page<Product> productPage = repository.findAll(pageable);
+        List<ProductDTO> products = productPage
+                .getContent()
+                .stream().map(mapper::toProductDTO)
                 .collect(Collectors.toList());
+        return ProductPage.builder()
+                .totalPages(productPage.getTotalPages())
+                .totalElements(productPage.getTotalElements())
+                .products(products)
+                .build();
     }
 
     @Override
@@ -36,13 +45,20 @@ public class ProductService implements IProductService {
 
 
     @Override
-    public List<ProductDTO> getProductByCategoryId(Long id) {
-        List<Product> products = repository.findByCategoryId(id);
+    public ProductPage getProductByCategoryId(Long id, Integer page) {
+        page = page >= 1 ? page - 1 : page;
+        Pageable pageable = PageRequest.of(page, 8);
+        Page<Product> productPage = repository.findByCategoryId(id,pageable);
 
-        return products
-                .stream()
-                .map(mapper::toProductDTO)
+        List<ProductDTO> products = productPage
+                .getContent()
+                .stream().map(mapper::toProductDTO)
                 .collect(Collectors.toList());
+        return ProductPage.builder()
+                .totalPages(productPage.getTotalPages())
+                .totalElements(productPage.getTotalElements())
+                .products(products)
+                .build();
     }
 
     @Override
