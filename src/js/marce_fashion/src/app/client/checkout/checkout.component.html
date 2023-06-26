@@ -1,0 +1,137 @@
+<form *ngIf="order == null" #f="ngForm" (ngSubmit)="onSubmit(f)" class="flex justify-center min-h-full ">
+  <div class="main-container">
+    <div class="flex justify-between">
+      <div class="w-7/12 border-r  pt-20 border-gray-300">
+        <div  class="mr-20">
+          <h3>
+            <a routerLink="/">
+              <img
+                class="w-[135px]"
+                src="https://file.hstatic.net/1000197303/file/logo_0caef1aea53f4b6281978ef2546b486b.png" alt="">
+            </a>
+          </h3>
+          <p class="text-lg">Thông tin giao hàng</p>
+          <input ngModel placeholder="Họ và tên" required name="username"
+                 class="block w-full p-2 rounded outline-blue-600 border border-gray-300">
+          <input ngModel placeholder="Email" email required name="email"
+                 class="block w-full p-2 my-3 rounded outline-blue-600 border border-gray-300">
+          <input ngModel placeholder="Địa chỉ"  required name="address"
+                 class="block w-full p-2 my-3 rounded outline-blue-600 border border-gray-300">
+          <input ngModel type="text" placeholder="Số điện thoại" required name="phoneNumber"
+                 class="block w-full p-2 rounded outline-blue-600 border border-gray-300">
+          <textarea ngModel id="message" placeholder="Ghi chú" rows="4" name ="note"
+                    class="w-full mt-3 rounded outline-blue-600 border border-gray-300 p-3"></textarea>
+        </div>
+      </div>
+      <div *ngIf="cart$ | async as cart" class="w-5/12 pt-20 ml-12">
+        <table  class="w-full">
+          <tbody >
+          <tr *ngFor="let item of cart.items">
+            <td>
+              <div class="relative mb-2">
+                <img
+                  class="w-[50px] rounded"
+                  src="{{getVariantImg(item)}}"
+                  alt="">
+                <span class="absolute
+                   inline-block
+                   w-[20px]
+                   h-[20px]
+                   rounded-full
+                   top-0 right-[-10px]
+                   text-white
+                   bg-gray-500
+                   text-center
+                ">{{item.quantity}}</span>
+              </div>
+            </td>
+            <td>
+             <div class="text-sm ml-3 mr-3">
+               <p class="mb-0 font-light">{{item.product.name}}</p>
+               <p class="text-gray-400">{{item.variant.color}} / {{item.variant.size}}</p>
+             </div>
+            </td>
+            <td>
+               <span class="font-light">{{item.quantity * item.product.price | currency : 'VND'}}</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span>Tạm tính</span>
+            <span>{{getTotal() | currency : 'VND'}}</span>
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <span>Phí vận chuyển</span>
+            <span>{{0 | currency : 'VND'}}</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <span>Tổng cộng</span>
+          <span class="text-xl ">{{getTotal() | currency : 'VND'}}</span>
+        </div>
+        <div class="flex justify-between items-center mt-2">
+          <a routerLink="/gio-hang" class="underline"> Trở về giỏ hàng</a>
+          <button [disabled]="!f.valid" class="py-2 px-10 bg-gray-400 rounded text-white" [ngClass]="{'opacity-60' : !f.valid}">Đặt hàng </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</form>
+<div *ngIf="order != null" class="flex justify-center mt-20 min-h-full" >
+ <div class="main-container">
+   <div class="p-4 w-full flex justify-between">
+    <div class="w-8/12">
+      <h4 class="text-lg">Thông tin sản phẩm</h4>
+      <table class="w-full" >
+        <thead class="font-medium uppercase text-left">
+        <th class="font-medium">Sản phẩm</th>
+        <th class="font-medium">Giá</th>
+        <th class="font-medium">Số lượng</th>
+        <th class="font-medium">Tổng giá sản phẩm</th>
+        </thead>
+        <tbody class="text-left" >
+        <tr *ngFor="let item of order.orderItems">
+
+          <td>
+            <div class="mr-3">
+              <p class="mb-0 font-light text-lg">{{item.product.name}}</p>
+              <p class="text-gray-400">{{item.variant.color}} / {{item.variant.size}}</p>
+            </div>
+          </td>
+          <td>
+            <span class="font-light">{{item.product.price | currency : 'VND'}}</span>
+          </td>
+          <td>
+            <div class="mx-5">
+              {{item.quantity}}
+            </div>
+          </td>
+          <td>
+            <div class="mx-10">
+              {{item.quantity * item.product.price | currency : 'VND'}}
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+     <div class="bg-green-400 rounded-xl p-5 h-fit w-4/12 ">
+       <div class="text-center">
+         <h4 class="text-white text-xl uppercase">Đặt hàng thành công</h4>
+       </div>
+       <div class="text-light">
+         <ul>
+           <li>Mã đơn hàng: {{order.id }}</li>
+           <li>Tổng đơn hàng: {{getTotal()   | currency : 'VND'}}</li>
+           <li>Phương thức thanh toán : COD</li>
+         </ul>
+       </div>
+       <button routerLink="/" class="py-2 px-5 rounded bg-white mt-5 ">Quay lại cửa hàng</button>
+     </div>
+   </div>
+ </div>
+
+</div>

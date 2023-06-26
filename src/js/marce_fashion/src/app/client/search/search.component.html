@@ -1,0 +1,15 @@
+<div class="flex justify-center items-center">
+  <div class="main-container">
+    <div class="flex justify-center items-center py-16">
+      <div class="w-1/2 text-center">
+        <h4 class="text-4xl font-mtd m-0 ">Tìm kiếm sản phẩm</h4>
+        <form ngForm class="flex items-center justify-center w-full">
+          <span class="material-symbols-outlined mr-2 text-3xl">search</span>
+          <label for="#search"></label>
+          <input ngModel (ngModelChange)="doSearch($event)" name="name" class="outline-0  border-b-red-200 border-b w-full" type="text" id="#search" placeholder="Tìm kiếm sản phẩm">
+        </form>
+      </div>
+    </div>
+    <app-product-list *ngIf="pageProduct$ | async as pageProduct" [products]="pageProduct.products"></app-product-list>
+  </div>
+</div>

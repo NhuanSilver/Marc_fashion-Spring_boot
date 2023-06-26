@@ -1,0 +1,6 @@
+.user-tab:hover .user-action{
+  display: block;
+}
+.user-action{
+  display: none;
+}

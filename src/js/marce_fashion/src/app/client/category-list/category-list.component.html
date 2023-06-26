@@ -1,0 +1,12 @@
+
+<div *ngIf="categories$ | async as categories">
+  <ul class="flex items-center flex-wrap">
+    <li *ngFor="let category of categories" class="max-w-[160px] p-5">
+      <a href="" class="">
+        <img src="{{category.imageSrc}}" alt="">
+      </a>
+      <div class="text-center font-mtd text-xl mt-2">{{category.name}}</div>
+    </li>
+
+  </ul>
+</div>

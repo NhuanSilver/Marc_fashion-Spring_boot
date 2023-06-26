@@ -1,0 +1,33 @@
+<ng-container *ngIf="item != null">
+  <td>
+    <div class="flex py-5 items-center">
+      <a routerLink="" class="block mr-5">
+        <img src="{{imgUrl}}"
+             alt=""
+             class="w-[100px] rounded-xl"
+        >
+      </a>
+      <div>
+        <p class="text-lg font-mtd">{{item.product.name}}</p>
+        <p class="text-xs mt-2 font-light">{{item.variant.color}} / {{item.variant.size}}</p>
+      </div>
+    </div>
+  </td>
+  <td>
+    <p>{{item.product.price | currency : 'VND'}}</p>
+  </td>
+  <td>
+    <div>
+      <input type="button" (click)="minus( 1)" value="-" class="px-2 text-xl cursor-pointer">
+      <input type="text" disabled value="{{item.quantity}}" class="text-center w-[25px] ">
+      <input type="button"(click)="plus( 1)" value="+" class="px-2 text-lg font-light cursor-pointer ">
+    </div>
+  </td>
+  <td>
+    <p>{{item.product.price * item.quantity  | currency : 'VND'}}</p>
+  </td>
+  <td>
+    <span (click)="removeItem()" class="material-symbols-outlined cursor-pointer ">close</span>
+  </td>
+
+</ng-container>

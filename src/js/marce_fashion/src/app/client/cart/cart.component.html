@@ -1,0 +1,50 @@
+<div class="flex justify-center" *ngIf="cart$ | async as cart">
+  <div class="main-container">
+    <h3 class="text-3xl font-mtd ">Giỏ hàng của bạn</h3>
+    <div class="flex  justify-between">
+      <div class="w-9/12 mr-5">
+        <p class="font-mtd text-lg">Tóm tắt đơn hàng ({{cart.items.length}})</p>
+        <table class="border-collapse w-full ">
+          <thead>
+          <tr class="text-sm font-medium  border-b-gray-500 text-left border-b-gray-200 border-b-2 ">
+            <th class="pb-2">Sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of cart.items" app-cart-item [item]="item"
+              class="border-b mb-2 border-gray-300 last:border-b-0"
+          >
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="w-3/12">
+        <p class="font-mtd text-lg ">Thành tiền</p>
+        <div class="bg-red-200 p-5 my-5 rounded ">
+          <div class="flex justify-between">
+            <span>Tạm tính</span>
+            <span>{{getTotal() | currency : 'VND'}}</span>
+          </div>
+          <div class="border-b-gray-500 border-b-2 flex justify-between mt-5 pb-5">
+            <span>Giảm giá </span>
+            <span>{{0 | currency : 'VND'}}</span>
+          </div>
+          <div class="flex justify-between mt-5">
+            <span>Thành tiền</span>
+            <span>{{getTotal() | currency : 'VND'}}</span>
+          </div>
+        </div>
+        <div class="flex justify-between items-center">
+          <button routerLink="/dat-hang" class="font-medium bg-red-200 py-3 px-6 rounded">Đặt hàng</button>
+          <a routerLink="/home" class="underline">Tiếp tục mua sắm</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,54 @@
+
+<div class="flex justify-center mt-5" *ngIf="(product$ | async) as p " >
+  <div class="main-container ">
+    <div class="grid grid-cols-5 min-h-[800px] gap-5">
+      <div class="col-span-3">
+        <div class="flex justify-between gap-5">
+          <div class="w-2/12">
+            <img
+              *ngFor="let image of variantImages"
+              (click)="imageLarge = image"
+              class="rounded-2xl mb-2 cursor-pointer"
+              src="{{image}}" alt="">
+          </div>
+          <div class="w-10/12">
+            <img class="object-fill rounded-3xl"
+              src="{{imageLarge}}"
+                 alt="">
+          </div>
+        </div>
+      </div>
+      <div class="col-span-2 ml-20">
+       <p class="text-3xl font-light">{{p.name}}</p>
+        <p class="font-medium">{{p.price | currency : 'VND'}}</p>
+        <div class="flex  align-items-center mt-5 border-b pb-5">
+            <div *ngFor="let color of colors" (click)="colorChanged(color)"
+              class="border-black-300 border-[1px] rounded-full p-2 m-1 cursor-pointer"
+                 [class]="currentVariant.color == color ? 'border-red-300' : 'border-black-300' "
+            >
+              <div
+                [style.background-color]="handleColor(color)"
+                class=" w-[20px] h-[20px] rounded-full "></div>
+            </div>
+        </div>
+        <div class="flex  align-items-center my-5 border-b pb-5">
+          <div *ngFor="let size of sizes" (click)="sizeChanged(size)"
+            class="border-[1px] text-center rounded-full p-2 m-1 cursor-pointer"
+               [ngClass]="currentVariant.size == size ? 'border-red-300' : 'border-black-300' ">
+            <div class=" w-[20px] h-[20px] rounded-full ">{{size}}</div>
+          </div>
+        </div>
+        <br>
+        <div class="mb-5">
+          <input type="button" (click)="quantity = quantity <= 1 ? quantity : quantity - 1" value="-" class="px-2 text-xl cursor-pointer">
+          <input type="text" disabled value="{{quantity}}" class="w-[10px] mx-2 text-lg">
+          <input type="button" (click)="quantity = quantity + 1" value="+" class="px-2 text-lg font-light cursor-pointer ">
+        </div>
+        <div class="my-5">
+          <button type="button" (click)="addToCart(currentVariant.id, quantity)" class="uppercase bg-red-200 px-[14px] py-[16px] mr-5">Thêm vào giỏ hàng</button>
+          <button type="button" class="uppercase bg-red-200 px-[14px] py-[16px]">Mua ngay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.main-container{
+  width: 100%;
+  max-width: 1200px;
+}
+*{
+  box-sizing: border-box;
+}
+@font-face {
+  font-family: 'MTD Balerno';
+  src: url('./assets/font/MTD Balerno/ttf/MTD Balerno Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MTD Balerno';
+  src: url('./assets/font/MTD Balerno/ttf/MTD Balerno Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'MTD Balerno';
+  src: url('./assets/font/MTD Balerno/ttf/MTD Balerno Bold.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

@@ -1,0 +1,17 @@
+<div class="flex justify-center my-5">
+  <div class="main-container">
+    <section class="rounded-2xl overflow-hidden">
+      <a href="/">
+        <img src="https://theme.hstatic.net/1000197303/1000796534/14/collection_banner_desktop.jpg?v=5590" alt="">
+      </a>
+    </section>
+    <div class="text-3xl mt-5 font-mtd font-light">Danh mục sản phẩm</div>
+    <a href="" class="block my-5 text-lg text-red-500">Xem tất cả</a>
+    <app-category-list></app-category-list>
+    <section>
+      <div class="uppercase text-3xl font-mtd font-light my-5 border-b-gray-300 pb-5 border-b">Sản phẩm mới</div>
+      <!--==================================== product list========================= -->
+      <app-product-list *ngIf="page | async as p" display="flex gap-5" [products]="p.products"></app-product-list>
+    </section>
+  </div>
+</div>

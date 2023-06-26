@@ -1,0 +1,58 @@
+<div class="flex justify-center my-5 ">
+  <div class="main-container">
+    <section class="rounded-2xl overflow-hidden">
+      <a href="/">
+        <img src="https://theme.hstatic.net/1000197303/1000796534/14/collection_banner_desktop.jpg?v=6256" alt="">
+      </a>
+    </section>
+    <div class="text-3xl mt-5 font-mtd font-light">Danh mục sản phẩm</div>
+    <a href="" class="block my-5 text-lg text-red-500">Xem tất cả</a>
+    <app-category-list></app-category-list>
+    <section>
+      <div class="uppercase font-mtd text-3xl font-light my-5">tổng sản phẩm</div>
+      <div class="flex justify-between  my-3">
+        <div class="flex items-center cursor-pointer" (click)="isFilterBar = !isFilterBar">
+          <span class="material-symbols-outlined mr-3">menu</span>
+          <span class="text-lg">Lọc sản phẩm </span>
+        </div>
+        <div class="relative group cursor-pointer w-[120px]">
+          <div class="flex justify-end sorting">
+            <div>{{sortingTypes.get(currentType)}}</div>
+            <span class="material-symbols-outlined">expand_more</span>
+          </div>
+          <ul class=" group-hover:block absolute top-full right-0 hidden " [style.z-index]="10">
+              <li class="mt-2 cursor-pointer" (click)="sortChanged(type.key)" [style.color]="type.key === currentType ? 'red' : ''" *ngFor="let type of sortingTypes | keyvalue">{{type.value}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="flex gap-10 w-full " *ngIf="isFilterBar">
+        <div class="mr-10">
+            <h4 class="font-mtd text-lg">Màu sắc</h4>
+            <div class="grid-cols-4 grid gap-4">
+              <div class="flex" *ngFor="let color of colors | keyvalue">
+                <div class="mt-2 flex items-center">
+                  <input class="cursor-pointer" (change)="checkColorCheckBox($event)" id="{{color.value}}" type="checkbox" value="{{color.key}}">
+                  <label for="{{color.value}}" class="pl-2 cursor-pointer"
+                         [style.color]="color.key == 'Trắng' ? 'black' : color.value ">{{color.key}}</label>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div>
+          <h4 class="font-mtd text-lg">Kích thước</h4>
+          <div class="grid-cols-4 grid gap-4">
+            <div class="mt-2 flex items-center" *ngFor="let size of sizes" >
+              <input class="cursor-pointer" (change)="checkSizeCheckBox($event)"id="{{size}}" type="checkbox" value="{{size}}">
+              <label class="pl-2 cursor-pointer" for="{{size}}">{{size}}</label>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <br class="border-b-gray-500">
+      <!--==================================== product list========================= -->
+      <app-product-list *ngIf="pageProduct | async as p" [products]="p.products"></app-product-list>
+    </section>
+  </div>
+</div>
