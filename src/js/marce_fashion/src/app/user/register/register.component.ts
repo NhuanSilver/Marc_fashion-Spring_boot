@@ -26,10 +26,9 @@ export class RegisterComponent {
       username : f.value.username,
       password : f.value.password
     }
-    console.log(  registrationRequest)
     this.authService.register(registrationRequest).subscribe({
       next: success => {
-        this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/dang-nhap');
       },
       error: error =>{
         console.log(error)

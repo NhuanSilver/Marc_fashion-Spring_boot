@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {ProductService} from "../../service/product.service";
 import {PageProduct} from "../../model/product/PageProduct";
 import {SortType} from "../../model/product/SortType";
@@ -17,7 +17,9 @@ import {CategoryService} from "../../service/category.service";
 })
 export class ProductComponent {
   pageProduct !: Observable<PageProduct>;
-  selectedCategoryIds : string[] = []
+  totalPages : number = 0;
+  selectedCategoryIds : string[] = [];
+  currentPage : number = 1;
   categoryId : string = '';
   category$ !: Observable<Category>;
   isFilterBar: boolean = false;
@@ -45,7 +47,7 @@ export class ProductComponent {
   ngOnInit(): void {
     this.activateRoute.paramMap.subscribe( params =>{
       this.categoryId = params.get('id') || '';
-      this.category$ = this.categoryService.getCategoryById(this.categoryId);
+      if (this.categoryId.length > 0) this.category$ = this.categoryService.getCategoryById(this.categoryId);
       this.selectedCategoryIds = []
       this.selectedCategoryIds.push(this.categoryId)
       this.getProductByFilter();
@@ -55,11 +57,18 @@ export class ProductComponent {
     let request : FilterRequest = {
       colors : Array.from(this.selectedColors),
       sizes : Array.from(this.selectedSizes),
-      page : 1,
+      page : this.currentPage,
       cateIds : this.selectedCategoryIds,
       type : this.currentType
     }
-    this.pageProduct = this.searchService.getProductByFilter(request)
+    this.pageProduct = this.searchService.getProductByFilter(request).pipe(
+      map(
+        pageProduct =>{
+          this.totalPages = pageProduct.totalPages;
+          return pageProduct;
+        }
+      )
+    )
   }
 
   checkColorCheckBox(event: any) {
@@ -86,5 +95,9 @@ export class ProductComponent {
     this.currentType = type;
     this.getProductByFilter()
 
+  }
+  currentPageChanged(page : number){
+    this.currentPage = page;
+    this.getProductByFilter();
   }
 }

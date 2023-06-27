@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit {
   constructor(private storageService : StorageService,
               public cartService : CartService,
               private router : Router,
-              private searchService : SearchService
               ) {
   }
   ngOnInit(): void {

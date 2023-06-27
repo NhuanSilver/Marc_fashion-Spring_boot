@@ -5,13 +5,31 @@
         <img src="https://theme.hstatic.net/1000197303/1000796534/14/collection_banner_desktop.jpg?v=5590" alt="">
       </a>
     </section>
-    <div class="text-3xl mt-5 font-mtd font-light">Danh mục sản phẩm</div>
-    <a href="" class="block my-5 text-lg text-red-500">Xem tất cả</a>
-    <app-category-list></app-category-list>
+    <div class="text-2xl text-center uppercase mt-10 font-mtd font-light">Danh mục sản phẩm</div>
+    <app-category-list class="my-5"></app-category-list>
     <section>
-      <div class="uppercase text-3xl font-mtd font-light my-5 border-b-gray-300 pb-5 border-b">Sản phẩm mới</div>
+      <div class="flex justify-between  border-b-gray-300 items-center border-b">
+        <div class="uppercase text-2xl font-mtd font-light ">Marc Signature</div>
+        <a routerLink="/tong-san-pham/1" class="block my-5 text-lg text-red-500">Xem tất cả</a>
+      </div>
       <!--==================================== product list========================= -->
-      <app-product-list *ngIf="page | async as p" display="flex gap-5" [products]="p.products"></app-product-list>
+      <app-product-list *ngIf="signature | async as p"  [products]="p.products"></app-product-list>
+    </section>
+    <section class="mt-10">
+      <div class="flex justify-between  border-b-gray-300 items-center border-b">
+        <div class="uppercase text-2xl font-mtd font-light ">Bikini</div>
+        <a routerLink="/tong-san-pham/2" class="block my-5 text-lg text-red-500">Xem tất cả</a>
+      </div>
+      <!--==================================== product list========================= -->
+      <app-product-list *ngIf="bikini | async as p"  [products]="p.products"></app-product-list>
+    </section>
+    <section class="my-10">
+     <div class="flex justify-between  border-b-gray-300 items-center border-b">
+       <div class="uppercase text-2xl font-mtd font-light ">Áo thun</div>
+       <a routerLink="/tong-san-pham/4"  class="block my-5 text-lg text-red-500">Xem tất cả</a>
+     </div>
+      <!--==================================== product list========================= -->
+      <app-product-list *ngIf="aothun | async as p"  [products]="p.products"></app-product-list>
     </section>
   </div>
 </div>

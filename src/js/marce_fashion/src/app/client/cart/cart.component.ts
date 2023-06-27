@@ -10,7 +10,7 @@ import {Cart} from "../../model/cart/Cart";
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  cart$ !: BehaviorSubject<Cart>;
+  cart$ !: Observable<Cart>
   constructor(private cartService : CartService) {
   }
 
@@ -20,5 +20,8 @@ export class CartComponent implements OnInit {
   }
   getTotal(){
     return this.cartService.getTotal();
+  }
+  getTotalItems(){
+    return this.cartService.getTotalItems()
   }
 }

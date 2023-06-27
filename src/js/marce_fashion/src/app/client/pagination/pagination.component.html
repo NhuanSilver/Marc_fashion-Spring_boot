@@ -1,0 +1,11 @@
+<div class="flex gap-5 items-center font-mtd text-lg">
+  <span class="material-symbols-outlined mr-5 cursor-pointer hover:text-red-200 " (click)="pageChanged(currentPage - 1)" *ngIf="currentPage > 1">arrow_left_alt</span>
+  <span class="cursor-pointer hover:text-red-200" [class]="" (click)="pageChanged(currentPage - 2)"*ngIf="currentPage >2">{{currentPage-2}}</span>
+  <span class="cursor-pointer hover:text-red-200" (click)="pageChanged(currentPage - 1)" *ngIf="currentPage >1">{{currentPage-1}}</span>
+  <span class="cursor-pointer text-red-500">{{currentPage}}</span>
+  <span class="cursor-pointer hover:text-red-200"  (click)="pageChanged(currentPage + 1)" *ngIf="totalPages - currentPage > 0">{{currentPage+1}}</span>
+  <span class="cursor-pointer hover:text-red-200" (click)="pageChanged(currentPage + 2)" *ngIf="totalPages - currentPage > 1" >{{currentPage+2}}</span>
+  <span class="cursor-pointer hover:text-red-200" *ngIf="totalPages - currentPage > 3">...</span>
+  <span class="cursor-pointer hover:text-red-200" (click)="pageChanged(totalPages)" *ngIf="totalPages - currentPage > 2">{{totalPages}}</span>
+  <span class="material-symbols-outlined ml-5 cursor-pointer hover:text-red-200" (click)="pageChanged(currentPage + 1)" *ngIf="currentPage < totalPages">arrow_right_alt</span>
+</div>

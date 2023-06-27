@@ -26,7 +26,6 @@ export class SearchService {
       type : filterRequest.type,
       categoryIds: filterRequest.cateIds
     }
-    console.log(params)
     return this.http.get<PageProduct>(this.apiSearch_url +"/filter", {params});
   }
 }

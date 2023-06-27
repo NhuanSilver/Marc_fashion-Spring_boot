@@ -1,4 +1,4 @@
-<div class="flex justify-center items-center">
+<div class="flex justify-center items-center mb-20">
   <div class="main-container">
     <div class="flex justify-center items-center py-16">
       <div class="w-1/2 text-center">
@@ -11,5 +11,6 @@
       </div>
     </div>
     <app-product-list *ngIf="pageProduct$ | async as pageProduct" [products]="pageProduct.products"></app-product-list>
+    <div *ngIf="totalPages > 1" class="flex justify-center my-5"><app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageEmit)="currentPageChanged($event)" ></app-pagination></div>
   </div>
 </div>

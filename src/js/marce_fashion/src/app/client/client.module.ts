@@ -20,6 +20,7 @@ import {LoginComponent} from "../user/login/login.component";
 import {RegisterComponent} from "../user/register/register.component";
 import {ProductItemComponent} from "./product/product-item/product-item.component";
 import { SearchComponent } from './search/search.component';
+import {PaginationComponent} from "./pagination/pagination.component";
 
 
 
@@ -41,10 +42,12 @@ import { SearchComponent } from './search/search.component';
     ProductListComponent,
     CategoryListComponent,
     SearchComponent,
+    PaginationComponent,
   ],
   exports: [
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,

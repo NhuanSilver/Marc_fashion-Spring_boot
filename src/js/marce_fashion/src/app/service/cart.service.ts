@@ -12,7 +12,8 @@ import {Cart} from "../model/cart/Cart";
 export class CartService {
   api_url = environment.api_url + "/carts"
   cart !: Cart;
-  cart$: BehaviorSubject<Cart> = new BehaviorSubject<Cart>(this.cart);
+  private subject = new BehaviorSubject<Cart>(this.cart);
+  cart$ = this.subject.asObservable();
 
   constructor(private storageService: StorageService,
               private http: HttpClient) {
@@ -24,30 +25,32 @@ export class CartService {
       quantity: quantity
     }
     return this.http.post<Cart>(`${this.api_url}`, request).pipe(
-      map((cart : Cart) => {
+      map((cart: Cart) => {
         this.cart = cart;
         this.notify()
         return cart;
       })
     )
   }
-  public getCart() : Observable<Cart>{
-    return this.http.get<Cart>(this.api_url +"/user").pipe(
-      map( cart => {
+
+  public getCart(): Observable<Cart> {
+    return this.http.get<Cart>(this.api_url + "/user").pipe(
+      map(cart => {
         this.cart = cart;
         this.notify();
         return cart
       })
     );
   }
-  plus(itemId: number, quantity : number): Observable<Item> {
+
+  plus(itemId: number, quantity: number): Observable<Item> {
     const params = {quantity: quantity}
-    return this.http.put<Item>(this.api_url+"/item/" + itemId + "/plus", {}, {params})
+    return this.http.put<Item>(this.api_url + "/item/" + itemId + "/plus", {}, {params})
       .pipe(
         map(
-          item =>{
+          item => {
             const existItem = this.cart.items.find(i => i.id === item.id);
-            if(existItem) existItem.quantity = item.quantity;
+            if (existItem) existItem.quantity = item.quantity;
             this.notify();
             return item;
           }
@@ -55,43 +58,64 @@ export class CartService {
       );
 
   }
-  minus(itemId: number, quantity : number): Observable<Item> {
+
+  minus(itemId: number, quantity: number): Observable<Item> {
     const params = {quantity: quantity}
-    return this.http.put<Item>(this.api_url+"/item/" + itemId + "/minus", {}, {params}).pipe(
+    return this.http.put<Item>(this.api_url + "/item/" + itemId + "/minus", {}, {params}).pipe(
       map(
-        item =>{
+        item => {
           const existItem = this.cart.items.find(i => i.id === item.id);
-          if(existItem) existItem.quantity = item.quantity;
+          if (existItem) existItem.quantity = item.quantity;
           this.notify();
           return item;
         }
       )
-    );;
+    );
   }
+
   removeItem(item: Item) {
-    return this.http.delete(this.api_url+"/item/" + item.id)
+    return this.http.delete(this.api_url + "/item/" + item.id)
       .pipe(
         map(
-          res=>{
-            this.cart.items.forEach( (i, index) =>{
+          res => {
+            this.cart.items.forEach((i, index) => {
               if (i === item) {
                 this.cart.items.splice(index, 1);
               }
             })
             this.notify();
-            return item;
+            return res;
           }
         )
-      );;
+      );
   }
-  notify() : void{
-    this.cart$.next(this.cart);
+
+  notify(): void {
+    this.subject.next(this.cart);
   }
 
   getTotal() {
-     return  this.cart.items.reduce((acc, item) =>{
-      const itemPrice = item.product.price * item.quantity;
-      return acc + itemPrice;
-    },0)
+    if (this.cart) {
+      return this.cart.items.reduce((acc, item) => {
+        const itemPrice = item.product.price * item.quantity;
+        return acc + itemPrice;
+      }, 0)
+    }
+    return 0;
+  }
+
+  getTotalItems() {
+    if (this.cart) {
+      return this.cart.items.length;
+    }
+    return 0;
+  }
+
+  clearCart() {
+    let cart: Cart = {
+      id: 1,
+      items: []
+    }
+    this.subject.next(cart)
   }
 }

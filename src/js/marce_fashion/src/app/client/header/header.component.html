@@ -43,9 +43,11 @@
         <span class="material-symbols-outlined text-3xl inline-block mr-5 cursor-pointer">favorite</span>
        <div class="relative">
          <span routerLink="/gio-hang" class="material-symbols-outlined text-3xl inline-block  cursor-pointer">local_mall</span>
-         <span *ngIf="cartService.cart$  | async as cart" class="absolute inline-block rounded-full top-0 right-[-6px] w-[20px] h-[20px] bg-red-200 text-center ">
+         <ng-container *ngIf="cartService.cart$  | async as cart" >
+           <span *ngIf="cart.items.length > 0" class="absolute inline-block rounded-full top-0 right-[-6px] w-[20px] h-[20px] bg-red-200 text-center ">
            {{cart.items.length}}
          </span>
+         </ng-container>
        </div>
 
       </div>

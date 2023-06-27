@@ -36,4 +36,7 @@ export class ProductService {
     return this.http.get<Product>(`${this.api_url}/variant/${id}`);
   }
 
+  getProductByCategoryId(cateId : number) {
+    return this.http.get<PageProduct>(`${this.api_url}/category/${cateId}`)
+  }
 }

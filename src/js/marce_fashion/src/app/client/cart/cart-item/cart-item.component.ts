@@ -27,9 +27,7 @@ export class CartItemComponent implements OnInit{
    this.cartService.removeItem(this.item).subscribe();
   }
   plus(quantity: number){
-    this.cartService.plus(this.item.id, quantity).subscribe(value =>{
-      console.log(this.item.quantity)
-    });
+    this.cartService.plus(this.item.id, quantity).subscribe()
   }
   minus(quantity: number){
     this.cartService.minus(this.item.id, quantity).subscribe();

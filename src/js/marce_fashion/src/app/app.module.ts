@@ -19,6 +19,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
+import { PaginationComponent } from './client/pagination/pagination.component';
 registerLocaleData(localeDe, 'vi-VN',localeDeExtra)
 
 @NgModule({
@@ -48,6 +49,8 @@ registerLocaleData(localeDe, 'vi-VN',localeDeExtra)
             provide: LOCALE_ID,
             useValue: 'vi-VN'
         },
+    ],
+    exports: [
     ],
     bootstrap: [AppComponent]
 })

@@ -13,7 +13,7 @@ import {OrderService} from "../../service/order.service";
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit{
-  cart$ !: BehaviorSubject<Cart>;
+  cart$ !: Observable<Cart>
   order !: Order;
   constructor(private cartService : CartService,
               private orderService : OrderService) {
@@ -41,11 +41,7 @@ export class CheckoutComponent implements OnInit{
   onSubmit(f: NgForm) {
     this.orderService.placeOrder(f.value).subscribe(order =>{
       this.order = order;
-      let cart : Cart = {
-        id  : 1,
-        items : []
-      }
-      this.cart$.next(cart)
+      this.cartService.clearCart();
     })
   }
 }
