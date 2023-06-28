@@ -1,0 +1,103 @@
+<header id="default-header" [style.z-index]="9999" >
+  <div class="flex justify-center ">
+    <div class="flex justify-between main-container py-2 ">
+      <form #f= "ngForm" (ngSubmit)="submit(f)" class="flex items-center w-2/12">
+        <span class="material-symbols-outlined mr-2 text-3xl">search</span>
+        <label for="#search"></label>
+        <input ngModel name="name" class="outline-0  border-b-red-200 border-b" type="text" id="#search" placeholder="Tìm kiếm sản phẩm">
+      </form>
+
+      <div class="w-[135px]">
+        <a href="/"><img class="" src="https://theme.hstatic.net/1000197303/1000796534/14/logo.png?v=5590"
+                         alt="Marc"></a>
+      </div>
+
+      <div class="  flex items-center ">
+        <div class="relative user-tab" *ngIf="(isAuthenticated | async) == undefined">
+          <span class="material-symbols-outlined pb-[-100px] text-3xl inline-block mr-5 cursor-pointer">account_circle</span>
+          <div  class="absolute top-full left-[-10px] w-[100px]  bg-white px-2 pt-2 user-action"  >
+           <ul  class="font-mtd text-base">
+             <li routerLink="dang-ky" class="py-2 cursor-pointer">Đăng ký</li>
+             <li routerLink="dang-nhap" class="py-2 cursor-pointer">Đăng nhập</li>
+           </ul>
+          </div>
+        </div>
+        <div *ngIf="isAuthenticated | async as user"
+              class="inline-block mr-5  cursor-pointer relative group">
+          <span class="font-mtd text-lg" >{{user.firstName + " " + user.lastName}}</span>
+          <span (click)="logOut()" class="group-hover:inline-block absolute text-base rounded font-mtd w-full bg-white py-1 px-2 top-full left-0 hidden">Đăng xuất</span>
+        </div>
+        <span class="material-symbols-outlined text-3xl inline-block mr-5 cursor-pointer">favorite</span>
+       <div class="relative">
+         <span routerLink="/gio-hang" class="material-symbols-outlined text-3xl inline-block  cursor-pointer">local_mall</span>
+         <ng-container *ngIf="cartService.cart$  | async as cart" >
+           <span *ngIf="cart.items.length > 0" class="absolute inline-block rounded-full top-0 right-[-6px] w-[20px] h-[20px] bg-red-200 text-center ">
+           {{cart.items.length}}
+         </span>
+         </ng-container>
+       </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="flex justify-center">
+    <nav class="main-container border-t py-3 border-b flex justify-center items-center">
+      <ul class="flex ">
+        <li routerLink="/" class="px-4 py-3 cursor-pointer">HOME</li>
+        <li routerLink="/tong-san-pham" class="px-4 py-3 cursor-pointer">SẢN PHẨM</li>
+        <li class="px-4 py-3 cursor-pointer">LOOKBOOK</li>
+        <li class="px-4 py-3 cursor-pointer">BLOG</li>
+        <li class="px-4 py-3 cursor-pointer">CỬA HÀNG</li>
+      </ul>
+
+    </nav>
+  </div>
+  <div class="flex justify-center">
+    <br>
+  </div>
+</header>
+<nav id="sub-navbar"
+     class="flex justify-center items-center top-0 py-2 hidden  top-0 left-0 w-full mb-5 shadow   z-[999px]  bg-[#fff] ">
+  <div class="main-container flex justify-between items-center">
+    <div>
+      <div class="w-[135px]">
+        <a href="/"><img class="" src="https://theme.hstatic.net/1000197303/1000796534/14/logo.png?v=5590"
+                         alt="Marc"></a>
+      </div>
+    </div>
+    <ul class="flex ">
+      <li routerLink="/" class="px-4 py-3 cursor-pointer">HOME</li>
+      <li routerLink="/tong-san-pham" class="px-4 py-3 cursor-pointer">SẢN PHẨM</li>
+      <li class="px-4 py-3 cursor-pointer">DỊP/SỰ KIỆN</li>
+      <li class="px-4 py-3 cursor-pointer">BLOG</li>
+      <li class="px-4 py-3 cursor-pointer">CỬA HÀNG</li>
+    </ul>
+    <div class="flex items-center ">
+      <span routerLink="/tim-kiem" class="material-symbols-outlined text-3xl inline-block mr-5 cursor-pointer">search</span>
+      <div class="relative user-tab" *ngIf="(isAuthenticated | async) == undefined">
+        <span class="material-symbols-outlined pb-[-100px] text-3xl inline-block mr-5 cursor-pointer">account_circle</span>
+        <div  class="absolute top-full left-[-10px] w-[100px]  bg-white px-2 pt-2 user-action"  >
+          <ul  class="text-base">
+            <li routerLink="dang-ky" class="py-2 cursor-pointer">Đăng ký</li>
+            <li routerLink="dang-nhap" class="py-2 cursor-pointer">Đăng nhập</li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="isAuthenticated | async as user"
+           class="inline-block mr-5  cursor-pointer relative group">
+        <span class="font-mtd text-lg" >{{user.firstName + " " + user.lastName}}</span>
+        <span (click)="logOut()" class="group-hover:inline-block text-base rounded font-mtd w-full absolute bg-white py-1 px-2 top-full left-0 hidden">Đăng xuất</span>
+      </div>
+      <span class="material-symbols-outlined text-3xl inline-block mr-5 cursor-pointer">favorite</span>
+      <div class="relative">
+        <span routerLink="/gio-hang" class="material-symbols-outlined text-3xl inline-block  cursor-pointer">local_mall</span>
+        <span *ngIf="cartService.cart$  | async as cart" class="absolute inline-block rounded-full top-0 right-[-6px] w-[20px] h-[20px] bg-red-200 text-center ">
+           {{cart.items.length}}
+         </span>
+      </div>
+
+    </div>
+  </div>
+</nav>

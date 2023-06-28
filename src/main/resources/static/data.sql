@@ -71,133 +71,42 @@ insert into image(id,src, product_id) values(16,'https://product.hstatic.net/100
 insert into image(id,src, product_id) values(17,'https://product.hstatic.net/1000197303/product/pro_hong_nhat_4_1c2c6577c22147d08634e0ad0f1d90f9.jpg', 2);
 insert into product_variant(id,color, size, image_id, product_id) values (9,'Hồng', 'S', 14, 2 );
 insert into product_variant(id,color, size, image_id, product_id) values (10,'Hồng', 'L', null, 2 );
-
+/*==================================== Sản phẩm 3 Màu hồng =======================*/
 insert into image(id,src, product_id) values(18,'https://product.hstatic.net/1000197303/product/pro_hong_1_284a49b5808346e49a100382cd7c2ba4.jpg', 3);
 insert into image(id,src, product_id) values(19,'https://product.hstatic.net/1000197303/product/pro_hong_2_0f4fc9e0931b4dd2832acccd12226e40.jpg', 3);
 insert into image(id,src, product_id) values(20,'https://product.hstatic.net/1000197303/product/pro_hong_3_0cdbb71670574d3887788d904e725380.jpg', 3);
 insert into image(id,src, product_id) values(21,'https://product.hstatic.net/1000197303/product/pro_hong_4_625148100f83456ca42c0275abf2f7eb.jpg', 3);
 insert into image(id,src, product_id) values(22,'https://product.hstatic.net/1000197303/product/pro_hong_5_8d0076fe48704fd28b43dd3099fcfa7a.jpg', 3);
-
-insert into image(id,src, product_id) values(23,'https://product.hstatic.net/1000197303/product/pro_xanh_la_4_6fb93de2c6c745509eded4f04703c923.jpg', 4);
-insert into image(id,src, product_id) values(24,'https://product.hstatic.net/1000197303/product/pro_xanh_la_1_34ceea55be214f0485c64e9cab54ddb7.jpg', 4);
-insert into image(id,src, product_id) values(25,'https://product.hstatic.net/1000197303/product/pro_xanh_la_2_b87c99e53d824a9bb741d8e6cf6d97c3.jpg', 4);
-insert into image(id,src, product_id) values(26,'https://product.hstatic.net/1000197303/product/pro_xanh_la_3_aa341d00ec7a44a3a9b470812268bdca.jpg', 4);
-
-insert into image(id,src, product_id) values(27,'https://product.hstatic.net/1000197303/product/pro_kem_1_3568110b8aa245d8b0f13a193e05450b.jpg', 5);
-insert into image(id,src, product_id) values(28,'https://product.hstatic.net/1000197303/product/pro_kem_2_6a0e0c5b1f984b24b15186dcb2e59c42.jpg', 5);
-insert into image(id,src, product_id) values(29,'https://product.hstatic.net/1000197303/product/pro_kem_3_a858173d818449aea6c522f7340a261a.jpg', 5);
-insert into image(id,src, product_id) values(30,'https://product.hstatic.net/1000197303/product/pro_kem_4_1844cb06f7d64a6d8421bcb81f2858f8.jpg', 5);
-
-insert into image(id,src, product_id) values(31,'https://product.hstatic.net/1000197303/product/pro_hong_dam_1_c332c0a019cd45e4a020ff66d78a5bde.jpg', 6);
-insert into image(id,src, product_id) values(32,'https://product.hstatic.net/1000197303/product/pro_hong_dam_2_1d539f5216584a2e9d4e8ea1d6af391e.jpg', 6);
-insert into image(id,src, product_id) values(33,'https://product.hstatic.net/1000197303/product/pro_hong_dam_3_68ed2ae4038c40aab2d83ac82b3b607b.jpg', 6);
-insert into image(id,src, product_id) values(34,'https://product.hstatic.net/1000197303/product/pro_hong_dam_4_1fafc0a96cf547a58e045e5887ea2f3a.jpg', 6);
+insert into product_variant(id,color, size, image_id, product_id) values (11,'Hồng', 'M', 18, 3 );
+insert into product_variant(id,color, size, image_id, product_id) values (12,'Hồng', 'L', 18, 3 );
+insert into product_variant(id,color, size, image_id, product_id) values (13,'Hồng', 'XL', 18, 3 );
 
 
-insert into image(id,src, product_id) values(35,'https://product.hstatic.net/1000197303/product/pro_hong_dam_1_f4be245c632c4713b8ce96c88e8a4d99.jpg', 7);
-insert into image(id,src, product_id) values(36,'https://product.hstatic.net/1000197303/product/pro_hong_dam_2_99a759c3aa3e48f5abee9863f0099f9a.jpg', 7);
-insert into image(id,src, product_id) values(37,'https://product.hstatic.net/1000197303/product/pro_hong_dam_3_e18ed0388c9e43c3a3983b9eab83520f.jpg', 7);
-insert into image(id,src, product_id) values(38,'https://product.hstatic.net/1000197303/product/pro_hong_dam_4_aa24ae37ed1d4e94a409780d7a229f20.jpg', 7);
+/*==================================== Sản phẩm 3 Màu Đen =======================*/
+insert into image(id,src, product_id) values(23,'https://product.hstatic.net/1000197303/product/pro_den_2_0ccb429d88be4dbebfa9215fa49c45c8_master.jpg', 3);
+insert into image(id,src, product_id) values(24,'https://product.hstatic.net/1000197303/product/pro_den_3_2fb5e771c9f142d684d524c12ab23f1b_master.jpg', 3);
+insert into image(id,src, product_id) values(25,'https://product.hstatic.net/1000197303/product/pro_den_4_664f8c70ce9b44a7915b17d64b0c8796_master.jpg', 3);
+insert into image(id,src, product_id) values(26,'https://product.hstatic.net/1000197303/product/pro_den_1_07d4ca20a76e400bb485eff30e91f7eb_master.jpg', 3);
+insert into image(id,src, product_id) values(27,'https://product.hstatic.net/1000197303/product/pro_hong_5_8d0076fe48704fd28b43dd3099fcfa7a_master.jpg', 3);
+insert into product_variant(id,color, size, image_id, product_id) values (14,'Hồng', 'M', 23, 3 );
+insert into product_variant(id,color, size, image_id, product_id) values (15,'Hồng', 'L', 23, 3 );
+insert into product_variant(id,color, size, image_id, product_id) values (16,'Hồng', 'XL', 23, 3 );
 
-insert into image(id,src, product_id) values(39,'https://product.hstatic.net/1000197303/product/pro_tim_1_fc38c98949884042abccf4f001b61f5c.jpg', 8);
-insert into image(id,src, product_id) values(40,'https://product.hstatic.net/1000197303/product/pro_tim_2_149d549a9d9640f8ad5be3e078bacaaa.jpg', 8);
-insert into image(id,src, product_id) values(41,'https://product.hstatic.net/1000197303/product/pro_tim_3_9187d62eab47419983acf70aa41d116f.jpg', 8);
-insert into image(id,src, product_id) values(42,'https://product.hstatic.net/1000197303/product/pro_tim_4_e546406491744d6d8229126e9ebd492c.jpg', 8);
+/*====================================Sản phẩm 3 Màu Xanh =======================*/
+insert into image(id,src, product_id) values(28,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_nhat_1_5f0c7854909b497993df67e2d2ff0e43_master.jpg', 3);
+insert into image(id,src, product_id) values(29,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_2_0596458917d84ef6b50931a8ca97998f_master.jpg', 3);
+insert into image(id,src, product_id) values(30,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_1_5a6da0cdf2704c22a19ddbea8f66daa4_master.jpg', 3);
+insert into image(id,src, product_id) values(31,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_3_9303f91172054553a9523913cb26397d_master.jpg', 3);
+insert into image(id,src, product_id) values(32,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_3_9303f91172054553a9523913cb26397d_master.jpg', 3);
+insert into product_variant(id,color, size, image_id, product_id) values (17,'Xanh', 'S', 28, 3 );
+insert into product_variant(id,color, size, image_id, product_id) values (18,'Xanh', 'L', 28, 3 );
+insert into product_variant(id,color, size, image_id, product_id) values (19,'Xanh', 'XL', 28, 3 );
 
-
-insert into image(id,src, product_id) values(43,'https://product.hstatic.net/1000197303/product/pro_trang_1_7fddcdf95e964bca8c12803991f82dfa.jpg', 9);
-insert into image(id,src, product_id) values(44,'https://product.hstatic.net/1000197303/product/pro_trang_2_250534c0b818433a87dc4909b84f01e9.jpg', 9);
-insert into image(id,src, product_id) values(45,'https://product.hstatic.net/1000197303/product/pro_trang_3_0a0abb40256045e6a169d3b30fbc16e0.jpg', 9);
-insert into image(id,src, product_id) values(46,'https://product.hstatic.net/1000197303/product/pro_trang_4_62d0ccf6644045d4aa12d82bf6fa6254.jpg', 9);
-
-
-insert into image(id,src, product_id) values(47,'https://product.hstatic.net/1000197303/product/pro_trang_1_5eea636e8bcb44e0a0354e8ca198bf27.jpg', 10);
-insert into image(id,src, product_id) values(48,'https://product.hstatic.net/1000197303/product/pro_trang_2_ac84d945cf484edeb1c1e274f957a470.jpg', 10);
-insert into image(id,src, product_id) values(49,'https://product.hstatic.net/1000197303/product/pro_trang_3_871fbcd044e4443c8bea30df24dd11a9.jpg', 10);
-insert into image(id,src, product_id) values(50,'https://product.hstatic.net/1000197303/product/pro_trang_4_0f48065db8f641a684957d6bc62e5bf2.jpg', 10);
-
-insert into image(id,src, product_id) values(51,'https://product.hstatic.net/1000197303/product/pro_hong_1_328e21e0c18240bfb9ab9b02eb69268f.jpg', 11);
-insert into image(id,src, product_id) values(52,'https://product.hstatic.net/1000197303/product/pro_hong_2_552dbb676e6044bb8b9ba3431758276b.jpg', 11);
-insert into image(id,src, product_id) values(53,'https://product.hstatic.net/1000197303/product/pro_hong_3_fedc6d22e62b42c0ab035590799cbfb2.jpg', 11);
-insert into image(id,src, product_id) values(54,'https://product.hstatic.net/1000197303/product/pro_hong_4_b4005c7d9435417981d8437a02485059.jpg', 11);
-
-insert into image(id,src, product_id) values(55,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_1_b034de4627564908bec7480a6f462a03.jpg', 12);
-insert into image(id,src, product_id) values(56,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_2_348e410cac6444a4b5ef917e407409f5.jpg', 12);
-insert into image(id,src, product_id) values(57,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_4_923952b65b9a447d8b45c83166130dfa.jpg', 12);
-insert into image(id,src, product_id) values(58,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_3_fb1a25402ec34022aea7740fae3b98ac.jpg', 12);
-
-
-insert into image(id,src, product_id) values(59,'https://product.hstatic.net/1000197303/product/pro_kem_2_dbc01473db0e423d8ae16327ceaeb3b7.jpg', 13);
-insert into image(id,src, product_id) values(60,'https://product.hstatic.net/1000197303/product/pro_kem_1_4ac4ef8ee6514778a4cd691b1b897c43.jpg', 13);
-insert into image(id,src, product_id) values(61,'https://product.hstatic.net/1000197303/product/pro_kem_3_bb448de93ccc4872af99810de54bf092.jpg', 13);
-insert into image(id,src, product_id) values(62,'https://product.hstatic.net/1000197303/product/pro_kem_4_77ebb7e23407498ca1187802484eafbb.jpg', 13);
-
-insert into image(id,src, product_id) values(63,'https://product.hstatic.net/1000197303/product/pro_kem_1_6dc51740be6645ea8e6773cf8f67bb8f.jpg', 14);
-insert into image(id,src, product_id) values(64,'https://product.hstatic.net/1000197303/product/pro_kem_2_651bd71d89b641d6b82667eec8bb5376.jpg', 14);
-insert into image(id,src, product_id) values(65,'https://product.hstatic.net/1000197303/product/pro_kem_3_6eb68c49543648659ab3199874d6b3e8.jpg', 14);
-insert into image(id,src, product_id) values(66,'https://product.hstatic.net/1000197303/product/pro_kem_4_fd3aee8c9b254483ae9bf90aa11a0647.jpg', 14);
-
-
-insert into image(id,src, product_id) values(67,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_1_99d128b8778c4ec58a5aec42cf2f7fd3.jpg', 15);
-insert into image(id,src, product_id) values(68,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_2_607c189bbef34d1ea9281fac67e858b1.jpg', 15);
-insert into image(id,src, product_id) values(69,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_3_7160989c467d4f919b6e5d3e038ca8a0.jpg', 15);
-insert into image(id,src, product_id) values(70,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_4_a658b5ee27b74d2e8f1a0db3166ef27d.jpg', 5);
-
-
-insert into image(id,src, product_id) values(71,'https://product.hstatic.net/1000197303/product/pro_trang_1_e100f9fe84084b8c94fd724640c08613.jpg', 16);
-insert into image(id,src, product_id) values(72,'https://product.hstatic.net/1000197303/product/pro_trang_2_ab8c4ba7989a4c3998eb3c2e09a1c587.jpg', 16);
-insert into image(id,src, product_id) values(73,'https://product.hstatic.net/1000197303/product/pro_trang_3_4eff4e926f37420984f595fd4a3abf0a.jpg', 16);
-insert into image(id,src, product_id) values(74,'https://product.hstatic.net/1000197303/product/pro_trang_3_4eff4e926f37420984f595fd4a3abf0a.jpg', 16);
-insert into image(id,src, product_id) values(75,'https://product.hstatic.net/1000197303/product/pro_trang_4_6f2684ce27a24c67b44d33acb5723555.jpg', 16);
-
-insert into image(id,src, product_id) values(76,'https://product.hstatic.net/1000197303/product/pro_trang_1_48f4b8c48ed44874b03a874a3517dec8.jpg', 17);
-insert into image(id,src, product_id) values(77,'https://product.hstatic.net/1000197303/product/pro_trang_2_03f0b444be784c8a8c6e5b2b342347bc.jpg', 17);
-insert into image(id,src, product_id) values(78,'https://product.hstatic.net/1000197303/product/pro_trang_3_400de64a50c841f4a9aa9b206918bcc0.jpg', 17);
-insert into image(id,src, product_id) values(79,'https://product.hstatic.net/1000197303/product/pro_trang_4_965462a5f1d14db3b5ba85a12080102f.jpg', 17);
-insert into image(id,src, product_id) values(80,'https://product.hstatic.net/1000197303/product/pro_trang_4_965462a5f1d14db3b5ba85a12080102f.jpg', 17);
-
-insert into image(id,src, product_id) values(81,'https://product.hstatic.net/1000197303/product/pro_trang_1_eb755ecdac05497b8f288dba9677ebe0.jpg', 18);
-insert into image(id,src, product_id) values(82,'https://product.hstatic.net/1000197303/product/pro_trang_2_74508ed38f34460882135c78eba5ec73.jpg', 18);
-insert into image(id,src, product_id) values(83,'https://product.hstatic.net/1000197303/product/pro_trang_3_6eef3bfdd2504a4d961739b5fca7d3a9.jpg', 18);
-insert into image(id,src, product_id) values(84,'https://product.hstatic.net/1000197303/product/pro_trang_4_964f184b01834fc09858897728ed8a09.jpg', 18);
-
-insert into image(id,src, product_id) values(85,'https://product.hstatic.net/1000197303/product/pro_den_1_3e9da1bce3d64755a17117ee66a2ebfd.jpg', 19);
-insert into image(id,src, product_id) values(86,'https://product.hstatic.net/1000197303/product/pro_den_2_02b3215bbe0c48f8a2c0c113d0d50b3a.jpg', 19);
-insert into image(id,src, product_id) values(87,'https://product.hstatic.net/1000197303/product/pro_den_3_7a10cbdb00934c77b3c5d3794765dced.jpg', 19);
-insert into image(id,src, product_id) values(88,'https://product.hstatic.net/1000197303/product/pro_den_4_7b85da049a2d4a5f920e71e5f4e24137.jpg', 19);
-
-
-insert into image(id,src, product_id) values(89,'https://product.hstatic.net/1000197303/product/pro_trang_1_c3f6bfdad0a24a71a03b98fbfc41cbec.jpg', 20);
-insert into image(id,src, product_id) values(90,'https://product.hstatic.net/1000197303/product/pro_trang_2_3949ec4ebdef4594aaaece84e9962c6c.jpg', 20);
-insert into image(id,src, product_id) values(101,'https://product.hstatic.net/1000197303/product/pro_trang_4_ae5cb7b7660941d3a5722daf20b303c4.jpg', 20);
-insert into image(id,src, product_id) values(102,'https://product.hstatic.net/1000197303/product/pro_trang_5_102445fb9b004971b4d5e06b2abf36b7.jpg', 20);
-
-
-insert into image(id,src, product_id) values(103,'https://product.hstatic.net/1000197303/product/pro_den_1_b9348e2953774a5aa9138014b55d2567.jpg', 21);
-insert into image(id,src, product_id) values(104,'https://product.hstatic.net/1000197303/product/pro_den_2_b4adcf0bdcb04f92bb89a9e8271ddabd.jpg', 21);
-insert into image(id,src, product_id) values(105,'https://product.hstatic.net/1000197303/product/pro_den_3_60084c1bd6454e3e929d4b7f875ec9ed.jpg', 21);
-insert into image(id,src, product_id) values(106,'https://product.hstatic.net/1000197303/product/pro_den_4_26eae48c2b74402683c445b427baa53b.jpg', 21);
-
-
-insert into image(id,src, product_id) values(107,'https://product.hstatic.net/1000197303/product/pro_hong_5_9859d9f96296463da9862658f287ea6c.jpg', 22);
-insert into image(id,src, product_id) values(108,'https://product.hstatic.net/1000197303/product/pro_hong_1_ffb4ab3af8b3495fab5d83e0780deebe.jpg', 22);
-insert into image(id,src, product_id) values(109,'https://product.hstatic.net/1000197303/product/pro_hong_2_20efb37b0b3b418e9d7afe57fb874d4c.jpg', 22);
-insert into image(id,src, product_id) values(110,'https://product.hstatic.net/1000197303/product/pro_hong_3_64b58f0da0854a0db25d31dc4aa2bc42.jpg', 22);
-insert into image(id,src, product_id) values(111,'https://product.hstatic.net/1000197303/product/pro_hong_4_61ec24da4e044f77a3acebd02242414b.jpg', 22);
-
-insert into image(id,src, product_id) values(112,'https://product.hstatic.net/1000197303/product/pro_hong_2_15d00bd1ea704f5c8df0668bd5f8649c.jpg', 23);
-insert into image(id,src, product_id) values(113,'https://product.hstatic.net/1000197303/product/pro_hong_1_061159faca4e4731940f7c53c2a1b014.jpg', 23);
-insert into image(id,src, product_id) values(114,'https://product.hstatic.net/1000197303/product/pro_hong_6_55c3679b53944b898785491f7cf757c9.jpg', 23);
-insert into image(id,src, product_id) values(115,'https://product.hstatic.net/1000197303/product/pro_hong_5_d7520eeaf99c4856ac3017d20bc85bd5.jpg', 23);
-insert into image(id,src, product_id) values(116,'https://product.hstatic.net/1000197303/product/pro_hong_4_2473ec2aa53d4cd1849aaf8a7427b010.jpg', 23);
-
-insert into image(id,src, product_id) values(117,'https://product.hstatic.net/1000197303/product/pro_trang_1_98cbec5dc1ee4495aef8bbd121b954a0.jpg', 24);
-insert into image(id,src, product_id) values(118,'https://product.hstatic.net/1000197303/product/pro_trang_2_b4aa49fcb22b4109ae9426205a39d657.jpg', 24);
-insert into image(id,src, product_id) values(119,'https://product.hstatic.net/1000197303/product/pro_trang_4_f0b4ea18603f4bf4aff8bb3ad804dee3.jpg', 24);
-insert into image(id,src, product_id) values(120,'https://product.hstatic.net/1000197303/product/pro_trang_5_d7b24ddbeb974fa29a89428d20f956c4.jpg', 24);
-
-
-insert into image(id,src, product_id) values(121,'https://product.hstatic.net/1000197303/product/pro_vang_1_bac61f3417494fc2afaaf7a9b7dad421.jpg', 25);
-insert into image(id,src, product_id) values(122,'https://product.hstatic.net/1000197303/product/pro_vang_2_bc8c3c04590a4806bad365503d389614.jpg', 25);
-insert into image(id,src, product_id) values(123,'https://product.hstatic.net/1000197303/product/pro_vang_3_f4873e488247492f987e8f7112908f62.jpg', 25);
-insert into image(id,src, product_id) values(124,'https://product.hstatic.net/1000197303/product/pro_vang_4_96c5b6d558dc4e389e1c64a7a96ecdd7.jpg', 25);
+/*====================================Sản phẩm 4 Màu Xanh =======================*/
+insert into image(id,src, product_id) values(33,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_1_423b59cbb9bf409f90107380bc2059a7_master.jpg', 4);
+insert into image(id,src, product_id) values(34,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_2_138598ebc2804e43a4902a2500a9fb5d_master.jpg', 4);
+insert into image(id,src, product_id) values(35,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_3_3ac86467c27f407a8ba249f69e9b37c8_master.jpg', 4);
+insert into image(id,src, product_id) values(36,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_4_862f1b006f9d4899bf64ca26ed274655_master.jpg', 4);
+insert into product_variant(id,color, size, image_id, product_id) values (20,'Xanh', 'S', 33, 4);
+insert into product_variant(id,color, size, image_id, product_id) values (21,'Xanh', 'M', 33, 4);
+insert into product_variant(id,color, size, image_id, product_id) values (22,'Xanh', 'XL', 33, 4);

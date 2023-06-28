@@ -1,0 +1,9 @@
+ <ul  class="flex items-center justify-center flex-wrap">
+    <li *ngFor="let cate of categories" class="max-w-[160px] p-5">
+      <a routerLink="/tong-san-pham/{{cate.id}}" class="">
+        <img src="{{cate.imageSrc}}" alt="">
+      </a>
+      <div class="text-center font-mtd text-xl mt-2">{{cate.name}}</div>
+    </li>
+
+  </ul>
