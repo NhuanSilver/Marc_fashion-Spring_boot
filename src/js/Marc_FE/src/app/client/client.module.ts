@@ -5,10 +5,7 @@ import {clientRoutes} from "./client.routes";
 import { CartComponent } from './cart/cart.component';
 import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
 import {FormsModule} from "@angular/forms";
-import {MatInputModule} from "@angular/material/input";
-import {MatIconModule} from "@angular/material/icon";
 import { ProductComponent } from './product/product.component';
 import {ProductListComponent} from "./product/product-list/product-list.component";
 import {CategoryListComponent} from "./category-list/category-list.component";
@@ -53,9 +50,7 @@ import {PaginationComponent} from "./pagination/pagination.component";
     CommonModule,
     RouterModule.forChild(clientRoutes),
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
+
   ]
 })
 export class ClientModule { }

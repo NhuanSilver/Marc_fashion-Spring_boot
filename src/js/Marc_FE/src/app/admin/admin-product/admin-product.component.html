@@ -1,31 +1,35 @@
 <div>
-  <table class="w-full bg-white border-collapse border-white border-8 rounded rounded-xl">
-    <thead class="text-left">
-    <tr>
-      <th class="font-medium uppercase">Ảnh sản phẩm</th>
-      <th class="font-medium uppercase">Tên</th>
-      <th class="font-medium uppercase col-span-2">Giá</th>
-      <th class="font-medium uppercase">Thao tác</th>
-    </tr>
-    </thead>
-    <tbody>
-      <tr class=" border-gray-200 border-b ">
+  <app-navbar [title]="'Quản lý sản phẩm'"></app-navbar>
+  <div class="bg-white rounded-xl overflow-hidden p-5">
+    <div class="flex justify-end pb-2 mb-4 border-b border-gray-300">
+      <button class="py-2 px-2 bg-gray-200 rounded uppercase">Thêm sản phẩm</button>
+    </div>
+    <table class="w-full border-collapse border-white">
+      <thead class="text-left">
+      <tr >
+        <th class="font-medium uppercase">Ảnh sản phẩm</th>
+        <th class="font-medium uppercase">Tên sản phẩm</th>
+        <th class="font-medium uppercase col-span-2">Giá</th>
+        <th class="font-medium uppercase text-end">Thao tác</th>
+      </tr>
+      </thead>
+      <tbody *ngIf="pageProduct$ | async as page" >
+      <tr *ngFor="let product of page.products" class=" border-gray-200 border-b last:border-none ">
         <td>
-          <img class="w-[60px] my-2 rounded" src="https://product.hstatic.net/1000197303/product/pro_xanh_duong_1_b034de4627564908bec7480a6f462a03_1024x1024.jpg" alt="">
+          <img class="w-[60px] my-2 rounded-lg" [src] = "product.images[0].src" alt="">
         </td>
         <td class="w-fit">
-         <span> Áo 2 dây linen form rộng phối bèo ngực</span>
+          <span class="font-mtd text-base">{{product.name}}</span>
+        </td>
+        <td class="font-medium">
+          {{product.price | currency : 'VND'}}
         </td>
       </tr>
-      <tr class="border-b-gray-200 border-b">
-        <td>
-          <img class="w-[60px] my-2 rounded" src="https://product.hstatic.net/1000197303/product/pro_xanh_duong_1_b034de4627564908bec7480a6f462a03_1024x1024.jpg" alt="">
-        </td>
-        <td>
-          <span> Áo 2 dây linen form rộng phối bèo ngực</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+    <div  *ngIf="totalPages > 1" class="flex justify-center my-5">
+      <app-pagination [currentPage]="currentPage" [totalPages]="totalPages"></app-pagination>
+    </div>
+  </div>
 
 </div>

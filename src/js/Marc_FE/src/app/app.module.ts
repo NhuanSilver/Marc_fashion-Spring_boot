@@ -4,7 +4,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {RouterOutlet} from "@angular/router";
 import { AppRoutingModule } from './app-routing.module';
-import { CategoryListComponent } from './client/category-list/category-list.component';
 import {HttpClientModule} from "@angular/common/http";
 import {registerLocaleData} from "@angular/common";
 import localeDe from '@angular/common/locales/de';
@@ -15,11 +14,6 @@ import { AdminComponent } from './admin/admin.component';
 import {ClientModule} from "./client/client.module";
 import {AdminModule} from "./admin/admin.module";
 import {AuthInterceptor, authInterceptorProviders} from "./service/auth.interceptor";
-import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {MatChipsModule} from "@angular/material/chips";
-import {MatButtonModule} from "@angular/material/button";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import { PaginationComponent } from './client/pagination/pagination.component';
 registerLocaleData(localeDe, 'vi-VN',localeDeExtra)
 
 @NgModule({
@@ -37,10 +31,6 @@ registerLocaleData(localeDe, 'vi-VN',localeDeExtra)
         FormsModule,
         ClientModule,
         AdminModule,
-        MatSlideToggleModule,
-        MatChipsModule,
-        MatButtonModule,
-        MatFormFieldModule,
     ],
     providers: [
         authInterceptorProviders,
