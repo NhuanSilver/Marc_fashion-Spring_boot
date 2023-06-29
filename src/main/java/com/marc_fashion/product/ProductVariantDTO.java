@@ -1,5 +1,6 @@
 package com.marc_fashion.product;
 
+import com.marc_fashion.image.ImageDTO;
 import lombok.Data;
 
 @Data

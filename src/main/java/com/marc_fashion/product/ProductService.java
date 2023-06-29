@@ -3,6 +3,8 @@ package com.marc_fashion.product;
 import com.marc_fashion.category.Category;
 import com.marc_fashion.category.CategoryRepository;
 import com.marc_fashion.exception.NotFoundException;
+import com.marc_fashion.image.Image;
+import com.marc_fashion.image.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

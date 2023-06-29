@@ -1,6 +1,7 @@
 package com.marc_fashion.product;
 
 import com.marc_fashion.category.Category;
+import com.marc_fashion.image.Image;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
