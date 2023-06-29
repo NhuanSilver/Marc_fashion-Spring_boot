@@ -1,9 +1,9 @@
 <div >
   <div class="border-b-2 border-b-gray-500 flex justify-center py-5 mb-2">
-    <img class="w-[100px]" src="https://theme.hstatic.net/1000197303/1000796534/14/logo.png?v=6255" alt="">
+    <img class="w-[100px] cursor-pointer" routerLink="/admin/products" src="https://theme.hstatic.net/1000197303/1000796534/14/logo.png?v=6255" alt="">
   </div>
   <ul *ngFor="let link of links" class="flex justify-center items-center">
-    <li (click)="currentLink = link" class=" rounded font-light my-1    font-mtd py-1 m-0 cursor-pointer  px-2 text-lg w-full"
+    <li (click)="currentLink = link" class=" rounded  my-1 uppercase py-1 m-0 cursor-pointer  px-2 text-lg w-full"
         [class] = "link===currentLink ? 'bg-red-500 shadow text-white' : 'hover:bg-red-300'">
       <span>{{link}}</span>
     </li>

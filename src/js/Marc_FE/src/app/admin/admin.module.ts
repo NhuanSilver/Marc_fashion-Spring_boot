@@ -8,7 +8,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AdminProductComponent } from './admin-product/admin-product.component';
 import {ClientModule} from "../client/client.module";
 import { AddProductComponent } from './add-product/add-product.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -23,13 +27,18 @@ import {FormsModule} from "@angular/forms";
     NavbarComponent,
     SidebarComponent
   ],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(adminRoutes),
-        ClientModule,
-        FormsModule,
+  imports: [
+    CommonModule,
+    RouterModule.forChild(adminRoutes),
+    ClientModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatTabsModule,
 
-    ]
+  ]
 })
 export class AdminModule {
 }

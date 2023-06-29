@@ -1,10 +1,14 @@
-import {Component} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, NgForm} from "@angular/forms";
 import { v4 as uuidv4 } from 'uuid';
 import {environment} from "../../../environments/environment.development";
 import {UploadService} from "../../service/upload.service";
 import {ProductService} from "../../service/product.service";
 import {CreateUpdateRequest} from "../../model/product/CreateUpdateRequest";
+import {Observable} from "rxjs";
+import {Category} from "../../model/category/category";
+import {CategoryService} from "../../service/category.service";
+import {Router} from "@angular/router";
 
 interface VariantOptions {
   color: string,
@@ -16,46 +20,33 @@ interface VariantOptions {
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css']
 })
-export class AddProductComponent {
+export class AddProductComponent implements OnInit{
   isSize: boolean = false;
   isColor: boolean = false;
+  isCategory: boolean = false;
+  categories$ !: Observable<Category[]>;
   selectedColors: Set<string> = new Set();
   selectedSizes: Set<string> = new Set();
   sizes: string[] = ['S', 'M', 'L', 'XL'];
-  colors: string[] = ['Đỏ', 'Xanh', 'Vàng', 'Đen', 'Trắng']
+  colors: string[] = ['Đỏ', 'Xanh', 'Vàng', 'Đen', 'Trắng', 'Hồng']
   optionImage : Set<string> = new Set();
   variantOptions: VariantOptions[] = [];
   imagesForColor : Map<string, File[]> = new Map();
+  currentCategory !: Category;
+  sizesControl = new FormControl();
+  colorsControl = new FormControl();
   constructor(private uploadService : UploadService,
-              private productService : ProductService) {
+              private productService : ProductService,
+              private categoryService : CategoryService,
+              private router: Router) {
   }
-
-  sizeChanged(size: string) {
-    let isExist = this.selectedSizes.has(size)
-    if (isExist) {
-      this.selectedSizes.delete(size)
-    } else {
-      this.selectedSizes.add(size)
-    }
-    this.generateOptions();
+  ngOnInit(): void {
+    this.categories$ = this.categoryService.getAllCategory();
   }
-
-  colorChanged(color: string) {
-    let isExist = this.selectedColors.has(color)
-    if (isExist) {
-      this.selectedColors.delete(color)
-    } else {
-      this.selectedColors.add(color)
-    }
-    this.generateOptions();
-  }
-
-  private generateOptions() {
+   generateOptions() {
     this.variantOptions = [];
-    let sizeArr = Array.from(this.selectedSizes);
-    let colorArr = Array.from(this.selectedColors);
-    sizeArr.map( size =>{
-      colorArr.map( color =>{
+    this.sizesControl.value?.map( (size : any) =>{
+      this.colorsControl.value?.map( (color : any) =>{
         const option = {
           size: size,
           color: color
@@ -96,10 +87,12 @@ export class AddProductComponent {
             name : f.value.productName,
             price : f.value.productPrice,
             images : images,
-            categoryId : 2,
+            categoryId : this.currentCategory.id,
             variants : this.variantOptions
           }
-          this.productService.createProduct(request).subscribe(console.log)
+          this.productService.createProduct(request).subscribe(res =>{
+            this.router.navigateByUrl('/admin/products')
+          })
       },
       error: err => {
         alert("lỗi rầu")
@@ -111,4 +104,5 @@ export class AddProductComponent {
   onFilesSelected(event: any) {
     this.imagesForColor.set(event.target.name, event.target.files)
   }
+
 }

@@ -1,7 +1,7 @@
 <form *ngIf="order == null" #f="ngForm" (ngSubmit)="onSubmit(f)" class="flex justify-center min-h-full ">
   <div class="main-container">
     <div class="flex justify-between">
-      <div class="w-7/12 border-r  pt-20 border-gray-300">
+      <div class="w-7/12 border-r  border-gray-300">
         <div  class="mr-20">
           <h3>
             <a routerLink="/">
@@ -10,7 +10,7 @@
                 src="https://file.hstatic.net/1000197303/file/logo_0caef1aea53f4b6281978ef2546b486b.png" alt="">
             </a>
           </h3>
-          <p class="text-lg">Thông tin giao hàng</p>
+          <p class="text-lg py-3">Thông tin giao hàng</p>
           <input ngModel placeholder="Họ và tên" required name="username"
                  class="block w-full p-2 rounded outline-blue-600 border border-gray-300">
           <input ngModel placeholder="Email" email required name="email"
@@ -23,14 +23,14 @@
                     class="w-full mt-3 rounded outline-blue-600 border border-gray-300 p-3"></textarea>
         </div>
       </div>
-      <div *ngIf="cart$ | async as cart" class="w-5/12 pt-20 ml-12">
+      <div *ngIf="cart$ | async as cart" class="w-5/12  ml-12">
         <table  class="w-full">
           <tbody >
           <tr *ngFor="let item of cart.items">
-            <td>
-              <div class="relative mb-2">
+            <td class="w-100">
+              <div class="relative w-[60px] mb-2">
                 <img
-                  class="w-[50px] rounded"
+                  class="object-contain block rounded"
                   src="{{getVariantImg(item)}}"
                   alt="">
                 <span class="absolute
@@ -38,7 +38,7 @@
                    w-[20px]
                    h-[20px]
                    rounded-full
-                   top-0 right-[-10px]
+                   top-0 right-[-10%]
                    text-white
                    bg-gray-500
                    text-center

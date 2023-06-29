@@ -2,7 +2,7 @@
   <app-navbar [title]="'Quản lý sản phẩm'"></app-navbar>
   <div class="bg-white rounded-xl overflow-hidden p-5">
     <div class="flex justify-end pb-2 mb-4 border-b border-gray-300">
-      <button routerLink="/admin/products/add" class="py-2 px-2 bg-gray-200 rounded uppercase">Thêm sản phẩm</button>
+      <button routerLink="/admin/products/add" class="py-2 px-3 bg-red-500 text-white rounded uppercase">Thêm sản phẩm</button>
     </div>
     <table class="w-full border-collapse border-white">
       <thead class="text-left">
@@ -16,10 +16,12 @@
       <tbody *ngIf="pageProduct$ | async as page" >
       <tr *ngFor="let product of page.products" class=" border-gray-200 border-b last:border-none ">
         <td>
-          <img class="w-[60px] my-2 rounded-lg" [src]="product.images[0].src" alt="">
+            <div class="w-[80px]">
+              <img class="my-2 rounded" [src]="product.images[0].src" alt="">
+            </div>
         </td>
         <td class="w-fit">
-          <span class="font-mtd text-base">{{product.name}}</span>
+          <span class="font-mtd text-lg">{{product.name}}</span>
         </td>
         <td class="font-medium">
           {{product.price | currency : 'VND'}}

@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  links : string[] = ['Quản lí sản phẩm', 'Quản lí người dùng']
+  links : string[] = ['Quản lí sản phẩm']
   currentLink: string = this.links[0];
 }

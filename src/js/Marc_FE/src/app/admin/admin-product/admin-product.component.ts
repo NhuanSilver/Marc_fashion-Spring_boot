@@ -27,6 +27,7 @@ export class AdminProductComponent implements OnInit{
       map(
         page =>{
           this.totalPages = page.totalPages;
+          console.log(page)
           return page
         }
       )
