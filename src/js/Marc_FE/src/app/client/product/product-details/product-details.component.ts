@@ -58,7 +58,7 @@ export class ProductDetailsComponent implements OnInit {
       .replace(/đ/g, 'd').replace(/Đ/g, 'D');
     this.variantImages = [];
     this.product.images.map((image) => {
-      if (image.src.includes(unicodeColor.toLowerCase())) {
+      if (image.src.toLowerCase().includes(unicodeColor.toLowerCase())) {
         this.variantImages.push(image.src);
       }
     })

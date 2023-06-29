@@ -8,6 +8,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AdminProductComponent } from './admin-product/admin-product.component';
 import {ClientModule} from "../client/client.module";
 import { AddProductComponent } from './add-product/add-product.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,12 +23,13 @@ import { AddProductComponent } from './add-product/add-product.component';
     NavbarComponent,
     SidebarComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(adminRoutes),
-    ClientModule,
+    imports: [
+        CommonModule,
+        RouterModule.forChild(adminRoutes),
+        ClientModule,
+        FormsModule,
 
-  ]
+    ]
 })
 export class AdminModule {
 }

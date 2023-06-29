@@ -32,7 +32,6 @@ public class ProductController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ProductDTO createNewProduct(@RequestBody CreateOrUpdateRequest request) {
         return productService.createNewProduct(request);
     }

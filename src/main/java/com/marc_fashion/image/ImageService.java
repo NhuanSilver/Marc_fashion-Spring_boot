@@ -43,7 +43,9 @@ public class ImageService implements IImageService {
         return extension.equalsIgnoreCase("jpg")
                 || extension.equalsIgnoreCase("jpeg")
                 || extension.equalsIgnoreCase("png")
+                || extension.equalsIgnoreCase("webp")
                 || extension.equalsIgnoreCase("gif");
+
     }
 
     private String getFileExtension(String fileName) {

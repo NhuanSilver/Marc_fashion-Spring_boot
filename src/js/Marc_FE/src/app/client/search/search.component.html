@@ -6,7 +6,7 @@
         <form ngForm class="flex items-center justify-center w-full">
           <span class="material-symbols-outlined mr-2 text-3xl">search</span>
           <label for="#search"></label>
-          <input ngModel (ngModelChange)="doSearch($event)" name="name" class="outline-0  border-b-red-200 border-b w-full" type="text" id="#search" placeholder="Tìm kiếm sản phẩm">
+          <input #search name="name" class="outline-0  border-b-red-200 border-b w-full" type="text" id="#search" placeholder="Tìm kiếm sản phẩm">
         </form>
       </div>
     </div>

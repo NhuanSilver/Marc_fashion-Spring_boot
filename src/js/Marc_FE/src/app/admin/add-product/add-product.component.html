@@ -1,14 +1,14 @@
 <div>
   <app-navbar [title]="'Thêm sản phẩm mới'"></app-navbar>
   <div class="bg-white rounded-xl overflow-hidden p-5 min-h-[80vh]">
-    <form class="w-full">
+    <form class="w-full" #f="ngForm" (ngSubmit)="submit(f)">
       <div class="flex justify-between gap-2 ">
         <div class="w-1/2">
-          <input type="text" placeholder="Tên sản phẩm"
+          <input type="text" ngModel name="productName" placeholder="Tên sản phẩm"
                  class="border-gray-300 border w-full outline-none rounded py-1 px-3 focus:border-gray-500 transition-all">
         </div>
         <div class="w-1/2">
-          <input type="text" placeholder="Giá sản phẩm"
+          <input type="number" ngModel name="productPrice"  placeholder="Giá sản phẩm"
                  class="border-gray-300 border w-full outline-none rounded py-1 px-3 focus:border-gray-500 transition-all">
         </div>
       </div>
@@ -32,7 +32,7 @@
           </ul>
         </div>
       </div>
-     <div *ngIf="options.length > 0">
+     <div *ngIf="variantOptions.length > 0">
        <h4 class="mt-5 text-2xl font-mtd">Tùy chọn</h4>
        <table class="w-full text-gray-700 shadow">
          <thead class="">
@@ -43,7 +43,7 @@
          </tr>
          </thead>
          <tbody>
-         <tr *ngFor="let option of options" class="border-b border-gray-200 text-center">
+         <tr *ngFor="let option of variantOptions" class="border-b border-gray-200 text-center">
            <td>{{option.color}}</td>
            <td>{{option.size}}</td>
            <td><span class="cursor-pointer inline-block py-3" (click)="deleteOption(option)">X</span></td>
@@ -53,7 +53,10 @@
      </div>
       <div *ngFor="let color of optionImage">
         <h4>Chọn ảnh cho màu {{color}}</h4>
-        <input type="image">
+        <input type="file" name="{{color}}" (change)="onFilesSelected($event)" multiple maxlength="4">
+      </div>
+      <div class="flex justify-center items-center my-2">
+        <button type="submit" class="p-2 bg-red-500 text-white font-base rounded">Thêm sản phẩm</button>
       </div>
     </form>
   </div>

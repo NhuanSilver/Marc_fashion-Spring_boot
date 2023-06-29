@@ -29,7 +29,6 @@ export class LoginComponent {
         next : res => {
           user = res;
           if (user){
-            console.log(user)
             this.storageService.saveUser(user);
             this.router.navigateByUrl('');
           }

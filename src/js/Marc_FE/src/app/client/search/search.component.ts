@@ -1,6 +1,6 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Product} from "../../model/product/Product";
-import {debounceTime, delay, map, Observable} from "rxjs";
+import {debounceTime, delay, fromEvent, map, Observable, pluck} from "rxjs";
 import {ProductService} from "../../service/product.service";
 import {PageProduct} from "../../model/product/PageProduct";
 import {SearchService} from "../../service/search.service";
@@ -12,6 +12,7 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit{
+  @ViewChild('search', {static : true}) search !: ElementRef;
   pageProduct$!: Observable<PageProduct>;
   currentPage: number = 1;
   totalPages: number = 1;
@@ -22,8 +23,8 @@ export class SearchComponent implements OnInit{
               private activateRoute : ActivatedRoute
   ) {
   }
-  doSearch(name : string){
-    this.pageProduct$ = this.searchService.getProductByName(name, 1).pipe(
+  doSearch(){
+    this.pageProduct$ = this.searchService.getProductByName(this.name, 1).pipe(
       delay(200),
       map( pageProduct =>{
         this.totalPages = pageProduct.totalPages
@@ -31,17 +32,24 @@ export class SearchComponent implements OnInit{
       })
     );
   }
-
+  ngAfterViewInit() {
+    fromEvent(this.search.nativeElement, 'keydown').pipe(
+      debounceTime(500),
+    ).subscribe( (input : any) => {
+      this.name = input.target.value;
+      this.doSearch()
+    })
+  }
   ngOnInit(): void {
     this.activateRoute.queryParams.subscribe(params =>{
       this.name = params['name'] || '';
-      this.doSearch(this.name)
+      this.doSearch()
     })
   }
 
 
   currentPageChanged(page : number) {
     this.currentPage = page;
-    this.doSearch(this.name)
+    this.doSearch()
   }
 }
