@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 public class Role {
     @Id
+    @Column(length = 20)
     private String name;
     @ManyToMany(mappedBy = "roles")
     private List<User> users;

@@ -54,7 +54,7 @@ public class AuthenticationService implements IAuthenticationService{
     public UserDTO register(RegistrationRequest request) {
         boolean isUsernameExist = userRepository.existsById(request.getUsername());
         if (isUsernameExist) throw new InvalidException("username is existed");
-        Role roleUser = roleRepository.findById("USER").orElseThrow(()-> new NotFoundException("role not found"));
+        Role roleUser = roleRepository.findById("ADMIN").orElseThrow(()-> new NotFoundException("role not found"));
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))

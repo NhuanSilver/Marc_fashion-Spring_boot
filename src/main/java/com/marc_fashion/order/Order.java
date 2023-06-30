@@ -19,9 +19,13 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 20, nullable = false)
     private String phoneNumber;
+    @Column(length = 150, nullable = false)
     private String address;
+    @Column(length = 100, nullable = false)
     private String username;
+    @Column(length = 100, nullable = false)
     private String email;
     private String note;
     @ManyToOne

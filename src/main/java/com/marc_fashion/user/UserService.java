@@ -4,7 +4,11 @@ import com.marc_fashion.auth.AuthenticationResponse;
 import com.marc_fashion.auth.LoginRequest;
 import com.marc_fashion.auth.RegistrationRequest;
 import com.marc_fashion.auth.JwtService;
+import com.marc_fashion.cart.Cart;
+import com.marc_fashion.cart.CartRepository;
 import com.marc_fashion.exception.NotFoundException;
+import com.marc_fashion.order.Order;
+import com.marc_fashion.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +29,8 @@ public class UserService implements IUserService {
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final CartRepository cartRepository;
+    private final OrderRepository orderRepository;
 
     @Override
     public List<UserDTO> getAllUser() {
@@ -56,6 +62,10 @@ public class UserService implements IUserService {
     public void delete(String username) {
         User user = userRepository.findById(username).orElseThrow( () -> new NotFoundException("User do not exist"));
         user.setRoles(new HashSet<>());
+        Cart cart = cartRepository.findByUserUsername(username).orElse(null);
+        List<Order> orders = orderRepository.findByUserUsername(username);
+        if (cart != null) cartRepository.delete(cart);
+        if (!orders.isEmpty()) orderRepository.deleteAll(orders);
         userRepository.delete(user);
     }
 }

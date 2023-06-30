@@ -21,9 +21,13 @@ import java.util.Set;
 @Builder
 public class User implements UserDetails {
     @Id
+    @Column(length = 50)
     private String username;
+    @Column(nullable = false, length = 100)
     private String password;
+    @Column(nullable = false, length = 30)
     private String firstName;
+    @Column(nullable = false, length = 30)
     private String lastName;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",joinColumns = @JoinColumn(name = "username"), inverseJoinColumns =  @JoinColumn(name = "role"))

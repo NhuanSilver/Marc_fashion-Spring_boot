@@ -32,18 +32,19 @@ public class ProductController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ProductDTO createNewProduct(@RequestBody CreateOrUpdateRequest request) {
         return productService.createNewProduct(request);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ProductDTO updateProduct(@PathVariable Long id, @RequestBody CreateOrUpdateRequest updateRequest) {
         return productService.updateProduct(id, updateRequest);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
     }
