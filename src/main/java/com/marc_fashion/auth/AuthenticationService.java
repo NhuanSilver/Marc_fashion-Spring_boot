@@ -32,7 +32,7 @@ public class AuthenticationService implements IAuthenticationService{
                         request.getPassword()
                 )
         );
-        User user = userRepository.findByUsername(request.getUsername())
+        User user = userRepository.findById(request.getUsername())
                 .orElseThrow();
         List<String> authorities = user.getAuthorities()
                 .stream()
@@ -52,9 +52,9 @@ public class AuthenticationService implements IAuthenticationService{
 
     @Override
     public UserDTO register(RegistrationRequest request) {
-        boolean isUsernameExist = userRepository.existsByUsername(request.getUsername());
+        boolean isUsernameExist = userRepository.existsById(request.getUsername());
         if (isUsernameExist) throw new InvalidException("username is existed");
-        Role roleUser = roleRepository.findByName("USER").orElseThrow(()-> new NotFoundException("role not found"));
+        Role roleUser = roleRepository.findById("USER").orElseThrow(()-> new NotFoundException("role not found"));
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -72,7 +72,7 @@ public class AuthenticationService implements IAuthenticationService{
             final String refreshToken = authorizeHeader.substring(7);
             final String username = jwtService.extractUsername(refreshToken);
             if(username != null){
-                User user = userRepository.findByUsername(username).orElseThrow();
+                User user = userRepository.findById(username).orElseThrow();
                 if(jwtService.isTokenValid(refreshToken, user)){
                     return  jwtService.generateToken(user);
                 }

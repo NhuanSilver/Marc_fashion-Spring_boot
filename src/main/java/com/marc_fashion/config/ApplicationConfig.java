@@ -38,7 +38,7 @@ public class ApplicationConfig implements WebMvcConfigurer {
     }
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> repository.findByUsername(username)
+        return username -> repository.findById(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 

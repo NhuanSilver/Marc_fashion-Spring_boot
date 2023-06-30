@@ -18,7 +18,7 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer quantity;
-    @OneToOne
+    @ManyToOne
     private ProductVariant variant;
     @ManyToOne
     private Product product;
