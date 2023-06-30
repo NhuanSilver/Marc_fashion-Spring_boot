@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ItemDTOMapper {
+public class CartItemDTOMapper {
     private final ModelMapper modelMapper;
-    public ItemDTO toDTO(Item item){
-        return modelMapper.map(item, ItemDTO.class);
+    public CartItemDTO toDTO(CartItem item){
+        return modelMapper.map(item, CartItemDTO.class);
     }
 }

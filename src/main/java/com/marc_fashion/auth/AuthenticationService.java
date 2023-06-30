@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
@@ -58,7 +59,7 @@ public class AuthenticationService implements IAuthenticationService{
                 .password(passwordEncoder.encode(request.getPassword()))
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                .roles(List.of(roleUser))
+                .roles(Set.of(roleUser))
                 .build();
         return userMapper.toDTO(userRepository.save(user));
     }

@@ -1,7 +1,5 @@
 package com.marc_fashion.user;
 
-import com.marc_fashion.user.UserDTO;
-import com.marc_fashion.user.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

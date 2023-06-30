@@ -22,7 +22,7 @@ public class OrderService implements IOrderService {
     public OrderDTO placeOrder(PlaceOrder request) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (user == null) throw new NotFoundException("user not found");
-        Cart cart = cartRepository.findByUserId(user.getId()).orElseThrow();
+        Cart cart = cartRepository.findByUserUsername(user.getUsername()).orElseThrow();
 
         Order order = Order.builder()
                 .user(user)

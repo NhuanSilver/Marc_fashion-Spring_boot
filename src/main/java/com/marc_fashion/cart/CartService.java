@@ -18,9 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartService implements ICartService {
     private final CartRepository cartRepository;
-    private final ItemRepository itemRepository;
+    private final CartItemRepository itemRepository;
     private final ProductVariantRepository variantRepository;
-    private final ItemDTOMapper itemDTOMapper;
+    private final CartItemDTOMapper itemDTOMapper;
     private final CartDTOMapper cartDTOMapper;
 
 
@@ -31,17 +31,17 @@ public class CartService implements ICartService {
         if(user == null) throw  new NotFoundException("User not found");
         ProductVariant variant = variantRepository.findById(request.getVariantId())
                 .orElseThrow( ()-> new NotFoundException("variant not found"));
-        Cart cart = cartRepository.findByUserId(user.getId()).orElse(null);
+        Cart cart = cartRepository.findByUserUsername(user.getUsername()).orElse(null);
         Product product = variant.getProduct();
         if (cart != null) {
-            Item item = cart.getItems()
+            CartItem item = cart.getItems()
                     .stream()
                     .filter(i -> i.getVariant().getId().equals(request.getVariantId()))
                     .findFirst().orElse(null);
             if (item != null) {
                 item.setQuantity(item.getQuantity() + request.getQuantity());
             } else {
-                item = Item.builder()
+                item = CartItem.builder()
                         .variant(variant)
                         .product(product)
                         .quantity(request.getQuantity())
@@ -50,7 +50,7 @@ public class CartService implements ICartService {
                 cart.getItems().add(item);
             }
         } else {
-            Item item = Item.builder()
+            CartItem item = CartItem.builder()
                     .variant(variant)
                     .product(product)
                     .quantity(request.getQuantity())
@@ -67,16 +67,16 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public ItemDTO plus(Long itemId, Integer quantity) {
-        Item item = itemRepository.findById(itemId)
+    public CartItemDTO plus(Long itemId, Integer quantity) {
+        CartItem item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException("item not found"));
         item.setQuantity(item.getQuantity() + quantity);
         return itemDTOMapper.toDTO(itemRepository.save(item));
     }
 
     @Override
-    public ItemDTO minus(Long itemId, Integer quantity) {
-        Item item = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("item not found"));
+    public CartItemDTO minus(Long itemId, Integer quantity) {
+        CartItem item = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("item not found"));
         Integer qty = item.getQuantity();
         if (qty - quantity <= 0) throw new InvalidException("quantity must not smaller than 1");
         item.setQuantity(qty - quantity);
@@ -93,7 +93,7 @@ public class CartService implements ICartService {
     @Override
     public CartDTO getCartByCurrentUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Cart cart = cartRepository.findByUserId(user.getId()).orElseThrow(() -> new NotFoundException("cart does not exist"));
+        Cart cart = cartRepository.findByUserUsername(user.getUsername()).orElseThrow(() -> new NotFoundException("cart does not exist"));
         return cartDTOMapper.toDTO(cart);
     }
 }

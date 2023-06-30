@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class CartDTO {
     private Long id;
-    private List<ItemDTO> items;
+    private List<CartItemDTO> items;
 }
