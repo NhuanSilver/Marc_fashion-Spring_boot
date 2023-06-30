@@ -7,7 +7,7 @@ import {Order} from "../model/order/Order";
   providedIn: 'root'
 })
 export class OrderService {
-  private api_url = environment.api_url + "/orders"
+  private api_url = environment.api_url + "/auth/orders"
   constructor(private http : HttpClient) { }
   public placeOrder(request : any){
     return this.http.post<Order>(this.api_url, request);

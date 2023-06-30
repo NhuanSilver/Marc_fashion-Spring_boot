@@ -10,7 +10,7 @@ import {Cart} from "../model/cart/Cart";
   providedIn: 'root'
 })
 export class CartService {
-  api_url = environment.api_url + "/carts"
+  api_url = environment.api_url + "/auth/carts"
   cart !: Cart;
   private subject = new BehaviorSubject<Cart>(this.cart);
   cart$ = this.subject.asObservable();
