@@ -9,5 +9,5 @@ public interface IAuthenticationService {
     AuthenticationResponse login(LoginRequest request);
     UserDTO register(RegistrationRequest request);
 
-    AuthenticationResponse refreshToken(HttpServletRequest request);
+    String refreshToken(HttpServletRequest request);
 }

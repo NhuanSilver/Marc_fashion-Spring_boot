@@ -1,5 +1,6 @@
 package com.marc_fashion.config;
 
+import com.marc_fashion.auth.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

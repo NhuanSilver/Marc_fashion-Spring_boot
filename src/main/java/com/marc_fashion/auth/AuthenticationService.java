@@ -66,22 +66,15 @@ public class AuthenticationService implements IAuthenticationService{
     }
 
     @Override
-    public AuthenticationResponse refreshToken(HttpServletRequest request) {
-        String authorizeHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+    public String refreshToken(HttpServletRequest request) {
+        final String authorizeHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (authorizeHeader != null && authorizeHeader.startsWith("Bearer ")){
-            String refreshToken = authorizeHeader.substring(7);
-            String username = jwtService.extractUsername(refreshToken);
+            final String refreshToken = authorizeHeader.substring(7);
+            final String username = jwtService.extractUsername(refreshToken);
             if(username != null){
                 User user = userRepository.findByUsername(username).orElseThrow();
                 if(jwtService.isTokenValid(refreshToken, user)){
-                    String accessToken = jwtService.generateToken(user);
-                    return  AuthenticationResponse.builder()
-                            .username(username)
-                            .firstName(user.getFirstName())
-                            .lastName(user.getLastName())
-                            .refreshToken(refreshToken)
-                            .accessToken(accessToken)
-                            .build();
+                    return  jwtService.generateToken(user);
                 }
             }
         }
