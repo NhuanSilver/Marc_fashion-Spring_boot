@@ -1,15 +1,15 @@
 <div>
-  <app-navbar [title]="'Thêm sản phẩm mới'"></app-navbar>
+  <app-navbar [title]="product.id != 0 ? 'Cập nhập sản phẩm' : 'Thêm mới sản phẩm'"></app-navbar>
   <div class="bg-white rounded-xl overflow-hidden p-5 min-h-[80vh]">
     <form class="w-full" #f="ngForm" (ngSubmit)="submit(f)">
       <div class="flex justify-between gap-2 ">
         <mat-form-field class="w-1/2">
           <mat-label>Tên sản phẩm</mat-label>
-          <input matInput required ngModel name="productName" placeholder="Nhập tên sản phẩm">
+          <input matInput required [(ngModel)]="product.name" name="productName" placeholder="Nhập tên sản phẩm">
         </mat-form-field>
         <mat-form-field class="w-1/2">
           <mat-label>Giá sản phẩm</mat-label>
-          <input matInput ngModel required name="productPrice" placeholder="Nhập giá sản phẩm">
+          <input matInput [(ngModel)]="product.price"  required name="productPrice" placeholder="Nhập giá sản phẩm">
         </mat-form-field>
       </div>
       <div class="flex justify-between gap-2 mt-2">
@@ -29,9 +29,9 @@
       <div class="flex justify-between gap-2">
         <mat-form-field class="w-1/2">
           <mat-label>Chọn danh mục</mat-label>
-          <mat-select required>
+          <mat-select required [(value)]="currentCategory.name">
             <mat-option (click)="currentCategory = category" *ngFor="let category of categories$ | async"
-                        [value]="category">
+                        [value]="category.name">
               {{category.name}}
             </mat-option>
           </mat-select>
@@ -60,13 +60,23 @@
         </mat-tab>
         <mat-tab label="Ảnh sản phẩm">
           <ng-container *ngFor="let color of optionImage" >
-            <div  class="border-dashed border-blue-500 border flex justify-center w-full my-5 p-5 cursor-pointer" (click)="openFileInput(color); $event.stopPropagation()">
+            <h4 class="m-0">Chọn ảnh cho màu {{color}}</h4>
+            <div  class="border-dashed border-blue-500 border flex  w-full my-5 p-5 cursor-pointer" (click)="openFileInput(color); $event.stopPropagation()">
              <div>
-               <h4 class="m-0">Chọn ảnh cho màu {{color}}</h4>
-               <ng-container *ngIf="imagesForColor.get(color) as imagesSelected">
+               <ng-container>
+                 <h4 class="m-0" *ngIf="getProductImagesByColor(color).length > 0">Ảnh cũ</h4>
                  <div class="flex gap-2">
-                   <div class="w-[80px] relative" *ngFor="let imgFile of imagesSelected">
-                     <img [id]="imgFile.name" #imageElement class="w-full h-full">
+                   <div class="w-[120px] relative" *ngFor="let extImage of getProductImagesByColor(color)">
+                     <img  [src]="extImage.src" alt class="w-full h-full">
+                     <span (click)="deleteExtImage(extImage.id); $event.stopPropagation()" class="absolute bg-red-500 top-0 right-0 p-1 text-white cursor-pointer">x</span>
+                   </div>
+                 </div>
+               </ng-container>
+               <ng-container *ngIf="imagesForColor.get(color) as imagesSelected">
+                 <h4 class="mt-5">Ảnh mới</h4>
+                 <div class="flex gap-2">
+                   <div class="w-[120px] relative" *ngFor="let imgFile of imagesSelected">
+                     <img [id]="imgFile.name" src="" alt="" #imageElement class="w-full h-full">
                      <span (click)="deleteImage(imgFile, color); $event.stopPropagation()" class="absolute bg-red-500 top-0 right-0 p-1 text-white cursor-pointer">x</span>
                    </div>
                  </div>
@@ -78,7 +88,7 @@
         </mat-tab>
       </mat-tab-group>
       <div class="flex justify-center items-center mt-20">
-        <button type="submit" class="py-2 px-3 bg-red-500 text-white rounded uppercase">Thêm sản phẩm</button>
+        <button type="submit" class="py-2 px-3 bg-red-500 text-white rounded uppercase">{{product.id != 0 ? 'Cập nhập sản phẩm' : 'Thêm mới sản phẩm'}}</button>
       </div>
     </form>
   </div>

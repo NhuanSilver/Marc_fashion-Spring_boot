@@ -1,5 +1,6 @@
 package com.marc_fashion.product;
 
+import com.marc_fashion.category.Category;
 import com.marc_fashion.image.ImageDTO;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import java.util.List;
 @Data
 public class ProductDTO {
     private Long id;
+    private Category category;
     private String name;
     private BigDecimal price;
     private List<ImageDTO> images;

@@ -8,7 +8,8 @@ export const adminRoutes : Routes = [
     children : [
       {path : '', component : AdminProductComponent},
       {path : 'products', component : AdminProductComponent},
-      {path : 'products/add', component : AddProductComponent}
+      {path : 'products/add', component : AddProductComponent},
+      {path : 'products/update/:id', component : AddProductComponent}
     ]
   }
 ]

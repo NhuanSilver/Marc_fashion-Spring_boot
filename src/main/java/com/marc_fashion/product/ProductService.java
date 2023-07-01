@@ -138,9 +138,11 @@ public class ProductService implements IProductService {
         images.forEach(image -> {
             String imgSrc = image.getSrc();
             int idx = imgSrc.lastIndexOf("/");
-            String imgName = imgSrc.substring(idx);
-            String uri = this.uploadFolder + File.separator + imgName;
-            new File(uri).delete();
+            if (idx != -1) {
+                String imgName = imgSrc.substring(idx);
+                String uri = this.uploadFolder + File.separator + imgName;
+                new File(uri).delete();
+            }
         });
         orderItemRepository.deleteAll(orderItems);
         imageRepository.deleteAll(images);
@@ -148,21 +150,9 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    @Transactional
     public ProductDTO updateProduct(Long id, CreateOrUpdateRequest request) {
         Product product = repository.findById(id).orElseThrow(() -> new NotFoundException("product does not exist"));
-        if ((request.getImages() != null && !request.getImages().isEmpty())) {
-            List<Image> images = request.getImages()
-                    .stream()
-                    .map(image ->
-                            Image.builder()
-                                    .product(product)
-                                    .src(image)
-                                    .build()
-
-                    )
-                    .collect(Collectors.toList());
-            product.setImages(images);
-        }
         if (request.getVariants() != null && !request.getVariants().isEmpty()) {
             List<ProductVariant> variants = request.getVariants()
                     .stream()
@@ -174,7 +164,22 @@ public class ProductService implements IProductService {
                                     .build()
                     )
                     .collect(Collectors.toList());
+            variantRepository.deleteAll(product.getVariants());
             product.setVariants(variants);
+        }
+        if ((request.getImages() != null && !request.getImages().isEmpty())) {
+            List<Image> images = request.getImages()
+                    .stream()
+                    .map(image ->
+                            Image.builder()
+                                    .product(product)
+                                    .src(image)
+                                    .build()
+
+                    )
+                    .collect(Collectors.toList());
+            imageRepository.deleteAll(product.getImages());
+            product.setImages(images);
         }
         if (request.getCategoryId() != null) {
             Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new NotFoundException("category does not exist"));

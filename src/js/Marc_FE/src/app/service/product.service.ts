@@ -47,17 +47,14 @@ export class ProductService {
   }
 
   createProduct(request: CreateUpdateRequest) {
-    let productRequest = {
-      name: request.name,
-      price: request.price,
-      categoryId: request.categoryId,
-      variants: request.variants,
-      images: request.images,
-    }
-    return this.http.post<Product>(this.api_url, productRequest);
+    return this.http.post<Product>(this.api_url, request);
   }
 
   deleteProduct(id: number) : Observable<any> {
     return this.http.delete(this.api_url  + "/"+id)
+  }
+
+  updateProduct(id: number, request: CreateUpdateRequest):Observable<Product> {
+    return this.http.put<Product>(this.api_url +"/" + id,request)
   }
 }
