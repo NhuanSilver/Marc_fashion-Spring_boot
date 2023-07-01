@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Entity
 @Data
 @Builder
@@ -24,4 +26,18 @@ public class ProductVariant {
     private Product product;
     @ManyToOne
     private Image image;
+    private Timestamp createdAt;
+    private Timestamp lastUpdated;
+
+    @PrePersist
+    protected void onCreate() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        createdAt = timestamp;
+        lastUpdated = timestamp;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        lastUpdated = new Timestamp(System.currentTimeMillis());
+    }
 }

@@ -30,7 +30,11 @@ export class LoginComponent {
           user = res;
           if (user){
             this.storageService.saveUser(user);
-            this.router.navigateByUrl('');
+            if (user.authorities.includes('ROLE_ADMIN')){
+              this.router.navigateByUrl('/admin')
+            } else{
+              this.router.navigateByUrl('')
+            }
           }
 
         },

@@ -56,4 +56,8 @@ export class ProductService {
     }
     return this.http.post<Product>(this.api_url, productRequest);
   }
+
+  deleteProduct(id: number) : Observable<any> {
+    return this.http.delete(this.api_url  + "/"+id)
+  }
 }

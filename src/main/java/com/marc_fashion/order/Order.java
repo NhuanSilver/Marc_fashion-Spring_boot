@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -32,4 +33,18 @@ public class Order {
     private User user;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private List<OrderItem> orderItems;
+    private Timestamp createdAt;
+    private Timestamp lastUpdated;
+
+    @PrePersist
+    protected void onCreate() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        createdAt = timestamp;
+        lastUpdated = timestamp;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        lastUpdated = new Timestamp(System.currentTimeMillis());
+    }
 }

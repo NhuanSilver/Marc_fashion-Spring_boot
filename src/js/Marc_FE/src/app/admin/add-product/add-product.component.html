@@ -16,7 +16,7 @@
         <mat-form-field class="w-1/2">
           <mat-label>Chọn kích cở</mat-label>
           <mat-select required [formControl]="sizesControl" multiple>
-            <mat-option  (click)="generateOptions()" *ngFor="let size of sizes" [value]="size">{{size}}</mat-option>
+            <mat-option (click)="generateOptions()" *ngFor="let size of sizes" [value]="size">{{size}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="w-1/2">
@@ -59,10 +59,22 @@
           </div>
         </mat-tab>
         <mat-tab label="Ảnh sản phẩm">
-          <div *ngFor="let color of optionImage">
-            <h4>Chọn ảnh cho màu {{color}}</h4>
-            <input type="file" name="{{color}}" (change)="onFilesSelected($event)" multiple maxlength="4">
-          </div>
+          <ng-container *ngFor="let color of optionImage" >
+            <div  class="border-dashed border-blue-500 border flex justify-center w-full my-5 p-5 cursor-pointer" (click)="openFileInput(color); $event.stopPropagation()">
+             <div>
+               <h4 class="m-0">Chọn ảnh cho màu {{color}}</h4>
+               <ng-container *ngIf="imagesForColor.get(color) as imagesSelected">
+                 <div class="flex gap-2">
+                   <div class="w-[80px] relative" *ngFor="let imgFile of imagesSelected">
+                     <img [id]="imgFile.name" #imageElement class="w-full h-full">
+                     <span (click)="deleteImage(imgFile, color); $event.stopPropagation()" class="absolute bg-red-500 top-0 right-0 p-1 text-white cursor-pointer">x</span>
+                   </div>
+                 </div>
+               </ng-container>
+               <input [id]="'inputFile' + color" type="file" class="hidden" name="{{color}}" (change)="onFilesSelected($event)" multiple accept="image/jpeg, image/png, image/webp">
+             </div>
+            </div>
+          </ng-container>
         </mat-tab>
       </mat-tab-group>
       <div class="flex justify-center items-center mt-20">

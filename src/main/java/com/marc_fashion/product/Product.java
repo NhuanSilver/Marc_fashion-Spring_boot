@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -28,5 +29,19 @@ public class Product {
     private List<ProductVariant> variants;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
     private List<Image> images;
+    private Timestamp createdAt;
+    private Timestamp lastUpdated;
+
+    @PrePersist
+    protected void onCreate() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        createdAt = timestamp;
+        lastUpdated = timestamp;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        lastUpdated = new Timestamp(System.currentTimeMillis());
+    }
 
 }

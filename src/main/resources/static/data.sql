@@ -91,7 +91,6 @@ insert into image(id,src, product_id) values(27,'https://product.hstatic.net/100
 insert into product_variant(id,color, size, image_id, product_id) values (14,'Hồng', 'M', 23, 3 );
 insert into product_variant(id,color, size, image_id, product_id) values (15,'Hồng', 'L', 23, 3 );
 insert into product_variant(id,color, size, image_id, product_id) values (16,'Hồng', 'XL', 23, 3 );
-
 /*====================================Sản phẩm 3 Màu Xanh =======================*/
 insert into image(id,src, product_id) values(28,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_nhat_1_5f0c7854909b497993df67e2d2ff0e43_master.jpg', 3);
 insert into image(id,src, product_id) values(29,'https://product.hstatic.net/1000197303/product/pro_xanh_duong_2_0596458917d84ef6b50931a8ca97998f_master.jpg', 3);

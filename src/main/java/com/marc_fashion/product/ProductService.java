@@ -5,14 +5,21 @@ import com.marc_fashion.category.CategoryRepository;
 import com.marc_fashion.exception.NotFoundException;
 import com.marc_fashion.image.Image;
 import com.marc_fashion.image.ImageRepository;
+import com.marc_fashion.order.OrderItem;
+import com.marc_fashion.order.OrderItemRepository;
+import com.marc_fashion.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.Normalizer;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -27,6 +34,10 @@ public class ProductService implements IProductService {
     private final ProductVariantRepository variantRepository;
     private final ImageRepository imageRepository;
     private final ProductDTOMapper mapper;
+    private final OrderItemRepository orderItemRepository;
+
+    @Value("${application.upload.path}")
+    private String uploadFolder;
 
     @Override
     public ProductPage getAllProduct(Integer page) {
@@ -122,7 +133,17 @@ public class ProductService implements IProductService {
     @Transactional
     public void deleteProduct(Long id) {
         Product product = repository.findById(id).orElseThrow(() -> new NotFoundException("product does not exist"));
-        imageRepository.deleteAll(product.getImages());
+        List<Image> images = product.getImages();
+        List<OrderItem> orderItems = orderItemRepository.findByProductId(product.getId());
+        images.forEach(image -> {
+            String imgSrc = image.getSrc();
+            int idx = imgSrc.lastIndexOf("/");
+            String imgName = imgSrc.substring(idx);
+            String uri = this.uploadFolder + File.separator + imgName;
+            new File(uri).delete();
+        });
+        orderItemRepository.deleteAll(orderItems);
+        imageRepository.deleteAll(images);
         repository.delete(product);
     }
 

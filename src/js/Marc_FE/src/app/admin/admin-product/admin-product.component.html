@@ -14,8 +14,8 @@
       </tr>
       </thead>
       <tbody *ngIf="pageProduct$ | async as page" >
-      <tr *ngFor="let product of page.products" class=" border-gray-200 border-b last:border-none ">
-        <td>
+      <tr [id]="product.id" *ngFor="let product of page.products" class=" border-gray-200 border-b last:border-none ">
+        <td >
             <div class="w-[80px]">
               <img class="my-2 rounded" [src]="product.images[0].src" alt="">
             </div>
@@ -26,6 +26,7 @@
         <td class="font-medium">
           {{product.price | currency : 'VND'}}
         </td>
+        <td class="text-end"><span (click)="deleteProduct(product)" class="material-symbols-outlined cursor-pointer">delete</span></td>
       </tr>
       </tbody>
     </table>
