@@ -1,20 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {BehaviorSubject, fromEvent} from "rxjs";
+import {fromEvent, Observable} from "rxjs";
 import {User} from "../../model/user/User";
 import {StorageService} from "../../service/storage.service";
 import {CartService} from "../../service/cart.service";
 import {NgForm} from "@angular/forms";
 import {NavigationExtras, Router} from "@angular/router";
-import {SearchService} from "../../service/search.service";
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isAuthenticated !: BehaviorSubject<User>;
-  isHover: boolean = false;
+  isAuthenticated !: Observable<User>;
   constructor(private storageService : StorageService,
               public cartService : CartService,
               private router : Router,

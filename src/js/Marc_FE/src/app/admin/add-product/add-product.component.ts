@@ -5,7 +5,7 @@ import {environment} from "../../../environments/environment.development";
 import {UploadService} from "../../service/upload.service";
 import {ProductService} from "../../service/product.service";
 import {CreateUpdateRequest} from "../../model/product/CreateUpdateRequest";
-import { map, Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {Category} from "../../model/category/category";
 import {CategoryService} from "../../service/category.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -25,25 +25,22 @@ interface VariantOptions {
 export class AddProductComponent implements OnInit {
   sizes: string[] = ['S', 'M', 'L', 'XL'];
   colors: string[] = ['Đỏ', 'Xanh', 'Đen', 'Trắng', 'Hồng']
-  isSize: boolean = false;
-  isColor: boolean = false;
-  isCategory: boolean = false;
   categories$ !: Observable<Category[]>;
   selectedColors: Set<string> = new Set();
   selectedSizes: Set<string> = new Set();
   optionImage: Set<string> = new Set();
   variantOptions: VariantOptions[] = [];
   imagesForColor: Map<string, File[]> = new Map();
-  currentCategory : Category = {
-    id : 0,
-    name : 'Marc Signature',
-    imageSrc : ''
+  currentCategory: Category = {
+    id: 0,
+    name: 'Marc Signature',
+    imageSrc: ''
   };
-  product : Product = {
-    id  : 0,
-    images : [],
+  product: Product = {
+    id: 0,
+    images: [],
     variants: [],
-    name : '',
+    name: '',
     price: 0,
     category: this.currentCategory
   };
@@ -70,16 +67,8 @@ export class AddProductComponent implements OnInit {
       if (id) {
         this.productService.getProductById(id).subscribe(p => {
           this.product = p;
-          console.log(p)
           this.currentCategory = p.category;
-          const defaultSizes = this.sizesControl.value;
-          const defaultColors = this.colorsControl.value;
-          this.product.variants.map(variant => {
-            if (!defaultSizes?.includes(variant.size)) defaultSizes?.push(variant.size);
-            if (!defaultColors?.includes(variant.color)) defaultColors?.push(variant.color);
-          })
-          this.sizesControl.setValue(defaultSizes);
-          this.colorsControl.setValue(defaultColors);
+          this.generateDefaultSizesAndColorsValues();
           this.generateOptions()
         });
       }
@@ -122,7 +111,7 @@ export class AddProductComponent implements OnInit {
       this.imagesForColor.forEach((value, key) => {
         let fileArr = Array.from(value)
         fileArr.map((file, index) => {
-          let unicodeColor = key.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+          let unicodeColor = this.decodeColor(key)
           let fileExt = file.name.substring(file.name.lastIndexOf('.'));
           let randomId = uuidv4().normalize('NFD').replaceAll('-', '')
           let newFileName = `product_${unicodeColor}_${index}_${randomId + fileExt}`;
@@ -152,15 +141,14 @@ export class AddProductComponent implements OnInit {
                 categoryId: this.currentCategory.id,
                 variants: this.variantOptions
               }
-              this.productService.updateProduct(this.product.id, request).subscribe()
-              this.router.navigateByUrl('/admin/products')
+              this.updateProduct(request)
             }
           },
-          error: err => {
+          error: () => {
             alert("Lỗi không xác định")
           }
         })
-      } else{
+      } else {
         let productImage = this.product.images.map(img => img.src);
         let request: CreateUpdateRequest = {
           name: f.value.productName,
@@ -169,8 +157,7 @@ export class AddProductComponent implements OnInit {
           categoryId: this.currentCategory.id,
           variants: this.variantOptions
         }
-        this.productService.updateProduct(this.product.id, request).subscribe( p => console.log(p))
-        this.router.navigateByUrl('/admin/products')
+        this.updateProduct(request)
       }
 
     }
@@ -179,6 +166,12 @@ export class AddProductComponent implements OnInit {
 
   createNewProduct(request: CreateUpdateRequest) {
     this.productService.createProduct(request).subscribe(() => {
+      this.router.navigateByUrl('/admin/products')
+    })
+  }
+
+  updateProduct(request: CreateUpdateRequest) {
+    this.productService.updateProduct(this.product.id, request).subscribe(()=>{
       this.router.navigateByUrl('/admin/products')
     })
   }
@@ -205,7 +198,6 @@ export class AddProductComponent implements OnInit {
             }
           }
         });
-
       }
     }
     fileReader.readAsDataURL(imgFile);
@@ -228,17 +220,29 @@ export class AddProductComponent implements OnInit {
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/đ/g, 'd').replace(/Đ/g, 'D');
   }
-  getProductImagesByColor(color : string) : Image[]{
+
+  getProductImagesByColor(color: string): Image[] {
     let decodeColor = this.decodeColor(color);
     return this.product.images.filter(image => image.src.toLowerCase().includes(decodeColor.toLowerCase()))
   }
 
   deleteExtImage(id: number) {
-    this.product.images.map( (value, index) => {
+    this.product.images.map((value, index) => {
       if (value.id === id) {
         this.product.images.splice(index, 1);
         return;
       }
     })
+  }
+
+  private generateDefaultSizesAndColorsValues() {
+    const defaultSizes = this.sizesControl.value;
+    const defaultColors = this.colorsControl.value;
+    this.product.variants.map(variant => {
+      if (!defaultSizes?.includes(variant.size)) defaultSizes?.push(variant.size);
+      if (!defaultColors?.includes(variant.color)) defaultColors?.push(variant.color);
+    })
+    this.sizesControl.setValue(defaultSizes);
+    this.colorsControl.setValue(defaultColors);
   }
 }

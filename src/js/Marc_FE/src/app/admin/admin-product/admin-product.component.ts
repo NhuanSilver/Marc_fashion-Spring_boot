@@ -28,7 +28,7 @@ export class AdminProductComponent implements OnInit{
       map(
         page =>{
           this.totalPages = page.totalPages;
-          return page
+          return page;
         }
       )
     );
