@@ -10,7 +10,7 @@ import {RegistrationRequest} from "../model/auth/RegistrationRequest";
   providedIn: 'root'
 })
 export class AuthService {
-  private api_url = environment.api_url
+  private api_url = environment.api_url + "/auth"
   constructor(private http : HttpClient) { }
   public login(request : LoginRequest) : Observable<User>{
     return this.http.post<User>(`${this.api_url}/login`, request);

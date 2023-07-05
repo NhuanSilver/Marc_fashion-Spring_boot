@@ -31,7 +31,6 @@ export class RegisterComponent {
         this.router.navigateByUrl('/dang-nhap');
       },
       error: error =>{
-        console.log(error)
       }}
     )
   }
