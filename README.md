@@ -17,7 +17,7 @@
   - Front-end: Angular, TailwindCSS
   - Database: MySQL
 ## List of features
-  This project have a basic features such as: 
+  This project have some basic features such as: 
   - Register, Login, Logout
   - Filter, sort, search product with pagination by conditions
   - Add product to cart, manage cart and place order
