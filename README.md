@@ -7,9 +7,9 @@
      - Change the database username and password as your in application.properties file
      - Run the app
    ### Front-end
-     - The front-end project is place in the src/js/Marc_FE
+     - The front-end project is placed in the src/js/Marc_FE
      - Open it in your Webstorm, Visual Studio Code or whatever you want
-     - Run the app by typing ng serve in terminal
+     - Run the app by typing "ng serve" in terminal
 ## Technologies Used
   - Back-end: Srping Boot, Spring Data JPA, Spring Security + JWT, Lombok
   - Front-end: Angular, TailwindCSS
