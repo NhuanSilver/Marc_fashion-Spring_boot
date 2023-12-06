@@ -9,6 +9,7 @@
    ### Front-end
      - The front-end project is placed in the src/js/Marc_FE
      - Open it in your Webstorm, Visual Studio Code or whatever you want
+     - Install node_modules by enter npm install in terminal
      - Run the app by typing "ng serve" in terminal
 ## Technologies Used
   - Back-end: Srping Boot, Spring Data JPA, Spring Security + JWT, Lombok
