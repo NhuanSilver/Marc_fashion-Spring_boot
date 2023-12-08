@@ -6,6 +6,7 @@ import {Product} from "../../../model/product/Product";
 import {ProductVariant} from "../../../model/product/ProductVariant";
 import {CartService} from "../../../service/cart.service";
 import {StorageService} from "../../../service/storage.service";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -27,6 +28,7 @@ export class ProductDetailsComponent implements OnInit {
               private productService: ProductService,
               private cartService : CartService,
               private storageService : StorageService,
+              private toast: ToastrService,
               private router : Router) {
   }
 
@@ -84,7 +86,11 @@ export class ProductDetailsComponent implements OnInit {
     if (this.storageService.getUser() == null) {
       this.router.navigate(['/dang-nhap'])
     }
-    this.cartService.addToCart(variantId, quantity).subscribe();
+    this.cartService.addToCart(variantId, quantity).subscribe(cart => {
+      const variant = cart.items.find(item => item.variant.id === variantId);
+      const product = variant?.product;
+      this.toast.success(`Đã thêm x${quantity} ${product?.name} vào giỏ hàng`)
+    });
   }
 
   quantityChanged(quantity: number) {

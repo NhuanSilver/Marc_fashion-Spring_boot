@@ -1,6 +1,5 @@
-import {Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {Product} from "../../model/product/Product";
-import {debounceTime, delay, fromEvent, map, Observable, pluck} from "rxjs";
+import {Component, ElementRef, OnInit,  ViewChild} from '@angular/core';
+import {debounceTime, fromEvent, map, Observable} from "rxjs";
 import {ProductService} from "../../service/product.service";
 import {PageProduct} from "../../model/product/PageProduct";
 import {SearchService} from "../../service/search.service";

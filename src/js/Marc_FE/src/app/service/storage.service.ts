@@ -7,22 +7,21 @@ import {User} from "../model/user/User";
 })
 export class StorageService {
   static USER_KEY = 'auth-user';
-  authSubject : BehaviorSubject<User> = new BehaviorSubject(this.getUser())
+  private authSubject: BehaviorSubject<User> = new BehaviorSubject(this.getUser())
   isAuthenticate = this.authSubject.asObservable();
 
   signOut(): void {
     localStorage.removeItem(StorageService.USER_KEY);
-    this.authSubject.next( this.getUser())
+    this.authSubject.next(this.getUser())
   }
 
-  public saveUser(user: User): void {
+  public saveUser(user: User): void{
     localStorage.removeItem(StorageService.USER_KEY);
     localStorage.setItem(StorageService.USER_KEY, JSON.stringify(user));
     this.authSubject.next(this.getUser())
   }
 
-  public getUser(): User{
-    const user = JSON.parse(localStorage.getItem(StorageService.USER_KEY) || 'null')
-    return user;
+  public getUser(): User {
+    return JSON.parse(localStorage.getItem(StorageService.USER_KEY) || "null")
   }
 }
