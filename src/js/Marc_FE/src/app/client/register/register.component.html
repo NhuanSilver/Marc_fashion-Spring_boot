@@ -47,7 +47,7 @@
         </ng-container>
       </div>
     </div>
-    <button type="submit" class="mt-5 font-medium text-amber-800 text-lg ">Đăng ký</button>
+    <button type="submit" [disabled]="registerForm.invalid || isUsernameExisted" class="mt-5 font-medium text-amber-800 text-lg disabled:opacity-75 ">Đăng ký</button>
     <div class="my-5"><a routerLink="/dang-nhap" class="font-medium">Đăng nhập</a></div>
   </div>
 </form>
