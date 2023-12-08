@@ -5,7 +5,7 @@ import {clientRoutes} from "./client.routes";
 import { CartComponent } from './cart/cart.component';
 import { CartItemComponent } from './cart/cart-item/cart-item.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ProductComponent } from './product/product.component';
 import {ProductListComponent} from "./product/product-list/product-list.component";
 import {CategoryListComponent} from "./category-list/category-list.component";
@@ -46,11 +46,12 @@ import {PaginationComponent} from "./pagination/pagination.component";
     HeaderComponent,
     PaginationComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(clientRoutes),
-    FormsModule,
+    imports: [
+        CommonModule,
+        RouterModule.forChild(clientRoutes),
+        FormsModule,
+        ReactiveFormsModule,
 
-  ]
+    ]
 })
 export class ClientModule { }

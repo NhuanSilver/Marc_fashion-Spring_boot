@@ -1,11 +1,51 @@
-<form #f="ngForm" (ngSubmit)="onSubmit(f)" class="flex justify-center mt-5">
-  <div class="main-container text-center">
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex justify-center mt-5">
+  <div class="main-container items-center flex-col flex">
     <h1 class="font-mtd text-3xl">Đăng ký</h1>
-    <div class=" flex flex-col items-center">
-      <input ngModel placeholder="Họ" name="firstName" class="text-base  outline-none  mt-5 w-1/3  border-b-2 border-b-gray-200 focus:border-b-gray-500 transition-all ease-linear duration-200">
-      <input ngModel placeholder="Tên" name="lastName" class="text-base  outline-none  mt-5 w-1/3 border-b-2 border-b-gray-200 focus:border-b-gray-500 transition-all ease-linear duration-200">
-      <input ngModel placeholder="Tài khoản" name="username" class="text-base  outline-none mt-5 w-1/3  border-b-2 border-b-gray-200 focus:border-b-gray-500 transition-all ease-linear duration-200">
-      <input ngModel placeholder="Mật khẩu" name="password" type="password" class="text-base  outline-none mt-5 w-1/3  border-b-2 border-b-gray-200 focus:border-b-gray-500 transition-all ease-linear duration-200">
+    <div class="max-w-fit">
+      <input placeholder="Họ"
+             formControlName="firstName"
+             class="text-base w-96 outline-none  mt-5 w-1/3  border-b-2 border-b-gray-200 focus:border-b-gray-500 transition-all ease-linear duration-200">
+      <div class="text-red-500">
+        <ng-container
+          *ngIf="registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)">
+          Họ được bỏ trống
+        </ng-container>
+      </div>
+      <input placeholder="Tên"
+             formControlName="lastName"
+             class="text-base w-96 outline-none  mt-5 w-1/3 border-b-2 border-b-gray-200 focus:border-b-gray-500 transition-all ease-linear duration-200">
+      <div class="text-red-500">
+        <ng-container
+          *ngIf="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)">
+          Tên được bỏ trống
+        </ng-container>
+      </div>
+      <input
+        placeholder="Tài khoản"
+        formControlName="username"
+        class="text-base w-96 focus:border-b-gray-500 transition-all ease-linear duration-200 outline-none mt-5 w-1/3  border-b-2 border-b-gray-200">
+      <div class="text-red-500">
+        <ng-container
+          *ngIf="registerForm.get('username')?.invalid && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)">
+          Tài khoản không được bỏ trống
+        </ng-container>
+      </div>
+      <div class="text-red-500">
+        <ng-container *ngIf="registerForm.get('username')?.valid && isUsernameExisted">
+          Tài khoản đã tồn tại
+        </ng-container>
+      </div>
+      <input
+        type="password"
+        placeholder="Mật khẩu"
+        formControlName="password"
+        class="text-base w-96 focus:border-b-gray-500 transition-all ease-linear duration-200  outline-none mt-5 w-1/3  border-b-2 border-b-gray-200">
+      <div class="text-red-500">
+        <ng-container
+          *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
+          Mật khẩu không được để trống
+        </ng-container>
+      </div>
     </div>
     <button type="submit" class="mt-5 font-medium text-amber-800 text-lg ">Đăng ký</button>
     <div class="my-5"><a routerLink="/dang-nhap" class="font-medium">Đăng nhập</a></div>

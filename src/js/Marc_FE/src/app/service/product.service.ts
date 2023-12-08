@@ -6,12 +6,14 @@ import {Product} from "../model/product/Product";
 import {PageProduct} from "../model/product/PageProduct";
 import {FilterRequest} from "../model/product/FilterRequest";
 import {CreateUpdateRequest} from "../model/product/CreateUpdateRequest";
+import {ApiPath} from "../model/Enum/ApiPath";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  api_url = `${environment.api_url}/products`;
+  api_url = environment.api_url + ApiPath.PRODUCT
+
   colorHandle: Map<string, string> = new Map([
     ['Trắng', 'white'],
     ['Đen', 'black'],

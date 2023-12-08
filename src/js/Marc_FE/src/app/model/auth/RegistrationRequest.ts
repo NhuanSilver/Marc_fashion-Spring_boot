@@ -1,6 +1,6 @@
 export interface RegistrationRequest{
-  firstName : string,
-  lastName : string,
-  username : string,
-  password : string
+  firstName : string | null | undefined,
+  lastName : string | null | undefined,
+  username : string | null | undefined,
+  password : string | null | undefined
 }

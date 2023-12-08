@@ -5,13 +5,16 @@ import {Item} from "../model/cart/Item";
 import {BehaviorSubject, map, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Cart} from "../model/cart/Cart";
+import {ApiPath} from "../model/Enum/ApiPath";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  api_url = environment.api_url + "/carts"
+
+  api_url = environment.api_url + ApiPath.CART;
   cart !: Cart;
+
   private subject = new BehaviorSubject<Cart>(this.cart);
   cart$ = this.subject.asObservable();
 

@@ -25,7 +25,6 @@ export class SearchComponent implements OnInit{
   }
   doSearch(){
     this.pageProduct$ = this.searchService.getProductByName(this.name, 1).pipe(
-      delay(200),
       map( pageProduct =>{
         this.totalPages = pageProduct.totalPages
         return pageProduct;
@@ -34,7 +33,7 @@ export class SearchComponent implements OnInit{
   }
   ngAfterViewInit() {
     fromEvent(this.search.nativeElement, 'keydown').pipe(
-      debounceTime(500),
+      debounceTime(300),
     ).subscribe( (input : any) => {
       this.name = input.target.value;
       this.doSearch()

@@ -4,13 +4,14 @@ import {PageProduct} from "../model/product/PageProduct";
 import {HttpClient} from "@angular/common/http";
 import {FilterRequest} from "../model/product/FilterRequest";
 import {Observable} from "rxjs";
+import {ApiPath} from "../model/Enum/ApiPath";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  apiSearch_url =`${environment.api_url}/search`
+  apiSearch_url = environment.api_url + ApiPath.SEARCH
 
   constructor(private http : HttpClient) { }
 
@@ -18,6 +19,7 @@ export class SearchService {
     let params = { page : page, name : name}
     return this.http.get<PageProduct>(`${this.apiSearch_url}`, {params});
   }
+
   getProductByFilter(filterRequest : FilterRequest) : Observable<PageProduct>{
     let params = {
       colors : filterRequest.colors,
