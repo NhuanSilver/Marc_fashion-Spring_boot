@@ -6,19 +6,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.parameters.P;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpRequest;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+    @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
     private final IAuthenticationService authenticationService;
+
+    @GetMapping("/validate/{username}")
+    public boolean isUsernameExisted(@PathVariable String username) {
+        return this.authenticationService.isUsernameExisted(username);
+    }
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody LoginRequest request){
         return authenticationService.login(request);

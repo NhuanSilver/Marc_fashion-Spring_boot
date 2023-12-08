@@ -12,4 +12,5 @@ public interface IUserService {
     UserDTO update(String username, UserUpdateRequest request);
 
     void delete(String username);
+
 }

@@ -14,6 +14,7 @@ public class UserController {
     public List<UserDTO> getAllUser(){
         return userService.getAllUser();
     }
+
     @PutMapping("/{username}")
     public UserDTO updateUser(@PathVariable String username, @RequestBody UserUpdateRequest request){
         return userService.update(username,request);

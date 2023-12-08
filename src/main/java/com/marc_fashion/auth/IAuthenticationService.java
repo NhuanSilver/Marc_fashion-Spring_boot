@@ -10,4 +10,6 @@ public interface IAuthenticationService {
     UserDTO register(RegistrationRequest request);
 
     String refreshToken(HttpServletRequest request);
+
+    boolean isUsernameExisted(String username);
 }

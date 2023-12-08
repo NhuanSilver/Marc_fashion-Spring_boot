@@ -11,18 +11,22 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService implements IAuthenticationService{
+public class AuthenticationService implements IAuthenticationService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
+
     @Override
     public AuthenticationResponse login(LoginRequest request) {
 
@@ -54,7 +58,7 @@ public class AuthenticationService implements IAuthenticationService{
     public UserDTO register(RegistrationRequest request) {
         boolean isUsernameExist = userRepository.existsById(request.getUsername());
         if (isUsernameExist) throw new InvalidException("username is existed");
-        Role roleUser = roleRepository.findById("USER").orElseThrow(()-> new NotFoundException("role not found"));
+        Role roleUser = roleRepository.findById("USER").orElseThrow(() -> new NotFoundException("role not found"));
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -68,16 +72,23 @@ public class AuthenticationService implements IAuthenticationService{
     @Override
     public String refreshToken(HttpServletRequest request) {
         final String authorizeHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authorizeHeader != null && authorizeHeader.startsWith("Bearer ")){
+        if (authorizeHeader != null && authorizeHeader.startsWith("Bearer ")) {
             final String refreshToken = authorizeHeader.substring(7);
             final String username = jwtService.extractUsername(refreshToken);
-            if(username != null){
+            if (username != null) {
                 User user = userRepository.findById(username).orElseThrow();
-                if(jwtService.isTokenValid(refreshToken, user)){
-                    return  jwtService.generateToken(user);
+                if (jwtService.isTokenValid(refreshToken, user)) {
+                    return jwtService.generateToken(user);
                 }
             }
         }
         throw new InvalidException("invalid refresh token");
+    }
+
+    @Override
+    public boolean isUsernameExisted(String username) {
+        Optional<User> user = userRepository.findById(username);
+        if (user.isPresent()) return true;
+        return false;
     }
 }
