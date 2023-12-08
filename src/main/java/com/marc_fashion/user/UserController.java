@@ -19,6 +19,7 @@ public class UserController {
     public UserDTO updateUser(@PathVariable String username, @RequestBody UserUpdateRequest request){
         return userService.update(username,request);
     }
+
     @DeleteMapping("/{username}")
     public void deleteUser(@PathVariable String username){
         userService.delete(username);
