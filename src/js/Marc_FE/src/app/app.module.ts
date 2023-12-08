@@ -14,6 +14,7 @@ import { AdminComponent } from './admin/admin.component';
 import {ClientModule} from "./client/client.module";
 import {AdminModule} from "./admin/admin.module";
 import {AuthInterceptor, authInterceptorProviders} from "./service/auth.interceptor";
+import {ToastrModule} from "ngx-toastr";
 registerLocaleData(localeDe, 'vi-VN',localeDeExtra)
 
 @NgModule({
@@ -31,6 +32,7 @@ registerLocaleData(localeDe, 'vi-VN',localeDeExtra)
         FormsModule,
         ClientModule,
         AdminModule,
+        ToastrModule.forRoot()
     ],
     providers: [
         authInterceptorProviders,

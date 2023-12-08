@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {User} from "../../model/user/User";
 import {StorageService} from "../../service/storage.service";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ import {Router} from "@angular/router";
 export class LoginComponent {
   constructor(private authService : AuthService,
               private storageService : StorageService,
+              private toast : ToastrService,
               private router: Router) {
   }
 
@@ -38,7 +40,7 @@ export class LoginComponent {
           }
 
         },
-        error : err => alert("some thing was wrong: " + err)
+        error : err => this.toast.error("Tài khoản hoặc mật khẩu không chính xác")
       }
     )
   }
