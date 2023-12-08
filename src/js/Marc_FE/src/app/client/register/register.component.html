@@ -8,7 +8,7 @@
       <div class="text-red-500">
         <ng-container
           *ngIf="registerForm.get('firstName')?.invalid && (registerForm.get('firstName')?.dirty || registerForm.get('firstName')?.touched)">
-          Họ được bỏ trống
+          Họ không được bỏ trống
         </ng-container>
       </div>
       <input placeholder="Tên"
@@ -17,7 +17,7 @@
       <div class="text-red-500">
         <ng-container
           *ngIf="registerForm.get('lastName')?.invalid && (registerForm.get('lastName')?.dirty || registerForm.get('lastName')?.touched)">
-          Tên được bỏ trống
+          Tên không được bỏ trống
         </ng-container>
       </div>
       <input
