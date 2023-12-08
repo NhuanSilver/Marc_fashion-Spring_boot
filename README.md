@@ -19,6 +19,6 @@
 ## List of features
   This project have some basic features such as: 
   - Register, Login, Logout
-  - Filter, sort, search product with pagination by conditions
+  - Filter, sort, search product with pagination
   - Add product to cart, manage cart and place order
   - CRUD products
