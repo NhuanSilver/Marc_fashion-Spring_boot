@@ -56,11 +56,11 @@ export class RegisterComponent implements OnInit {
       }
 
       this.authService.register(registrationRequest).subscribe({
-          next: success => {
+          next: _ => {
             this.router.navigateByUrl('/dang-nhap');
             this.toast.success("Đăng ký thành công")
           },
-          error: error => {
+          error: _ => {
             this.toast.error("Lỗi không xác định")
           }
         }

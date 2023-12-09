@@ -5,12 +5,13 @@ import {environment} from "../../../environments/environment.development";
 import {UploadService} from "../../service/upload.service";
 import {ProductService} from "../../service/product.service";
 import {CreateUpdateRequest} from "../../model/product/CreateUpdateRequest";
-import {map, Observable} from "rxjs";
+import {map, Observable, of, switchMap} from "rxjs";
 import {Category} from "../../model/category/category";
 import {CategoryService} from "../../service/category.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Product} from "../../model/product/Product";
 import {Image} from "../../model/product/Image";
+import {ToastrService} from "ngx-toastr";
 
 interface VariantOptions {
   color: string,
@@ -19,10 +20,10 @@ interface VariantOptions {
 
 @Component({
   selector: 'app-add-product',
-  templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.css']
+  templateUrl: './edit-product.component.html',
+  styleUrls: ['./edit-product.component.css']
 })
-export class AddProductComponent implements OnInit {
+export class EditProductComponent implements OnInit {
   sizes: string[] = ['S', 'M', 'L', 'XL'];
   colors: string[] = ['Đỏ', 'Xanh', 'Đen', 'Trắng', 'Hồng']
   categories$ !: Observable<Category[]>;
@@ -51,6 +52,7 @@ export class AddProductComponent implements OnInit {
   constructor(private uploadService: UploadService,
               private productService: ProductService,
               private categoryService: CategoryService,
+              private toast: ToastrService,
               private router: Router,
               private activateRoute: ActivatedRoute) {
   }
@@ -62,17 +64,84 @@ export class AddProductComponent implements OnInit {
         return categories
       })
     );
-    this.activateRoute.params.subscribe(params => {
-      let id: number = params['id'];
-      if (id) {
-        this.productService.getProductById(id).subscribe(p => {
-          this.product = p;
-          this.currentCategory = p.category;
-          this.generateDefaultSizesAndColorsValues();
-          this.generateOptions()
-        });
+    this.activateRoute.params.pipe(
+      switchMap(params => {
+        if (params['id']){
+          return this.productService.getProductById(params['id'])
+        }
+        return of(this.product)
+      })
+    )
+      .subscribe(p => {
+        this.product = p;
+        this.currentCategory = p.category;
+        this.generateDefaultSizesAndColorsValues();
+        this.generateOptions()
+      })
+  }
+
+  submit(f: NgForm) {
+    if (f.valid) {
+      let formData = new FormData();
+      let productImages = this.product.images.map(img => img.src);
+
+      this.imagesForColor.forEach((value, key) => {
+        let fileArr = Array.from(value)
+        fileArr.map((file, index) => {
+          let unicodeColor = this.decodeColor(key)
+          let fileExt = file.name.substring(file.name.lastIndexOf('.'));
+          let randomId = uuidv4().normalize('NFD').replaceAll('-', '')
+          let newFileName = `product_${unicodeColor}_${index}_${randomId + fileExt}`;
+          formData.append('images', file, newFileName)
+        })
+      })
+      if (formData.getAll('images').length > 0) {
+        this.uploadService.upload(formData)
+          .pipe(
+            switchMap(res => {
+              let images = res.map(img => environment.api_root + "/" + img)
+              if (this.product.id != 0) {
+                images.push(...productImages)
+              }
+              return this.editProduct(f, images)
+            })
+          )
+          .subscribe({
+            next: _ => {
+              this.router.navigateByUrl('/admin/products')
+            },
+            error: _ => {
+              this.toast.error("Có lỗi xảy ra")
+            }
+          })
+      } else {
+        this.editProduct(f, productImages).subscribe({
+          next: _ => {
+            this.router.navigateByUrl('/admin/products')
+          },
+          error: _ => {
+            this.toast.error("Có lỗi xảy ra")
+          }
+        })
       }
-    })
+
+    }
+
+  }
+
+  editProduct(f: NgForm, images: string[]): Observable<any> {
+    let request: CreateUpdateRequest = {
+      name: f.value.productName,
+      price: f.value.productPrice,
+      images: images,
+      categoryId: this.currentCategory.id,
+      variants: this.variantOptions
+    }
+    if (this.product.id != 0) {
+      return this.productService.updateProduct(this.product.id, request);
+    } else {
+      return this.productService.createProduct(request);
+    }
   }
 
   generateOptions() {
@@ -89,11 +158,6 @@ export class AddProductComponent implements OnInit {
     this.generateOptionImage()
   }
 
-  private generateOptionImage() {
-    this.optionImage.clear()
-    this.variantOptions.map(option => this.optionImage.add(option.color))
-  }
-
   deleteOption(option: VariantOptions) {
     let optionCount = 0;
     this.variantOptions.map((o, index) => {
@@ -103,77 +167,6 @@ export class AddProductComponent implements OnInit {
     if (optionCount < 1) this.imagesForColor.delete(option.color)
 
     this.generateOptionImage()
-  }
-
-  submit(f: NgForm) {
-    if (f.valid) {
-      let formData = new FormData();
-      this.imagesForColor.forEach((value, key) => {
-        let fileArr = Array.from(value)
-        fileArr.map((file, index) => {
-          let unicodeColor = this.decodeColor(key)
-          let fileExt = file.name.substring(file.name.lastIndexOf('.'));
-          let randomId = uuidv4().normalize('NFD').replaceAll('-', '')
-          let newFileName = `product_${unicodeColor}_${index}_${randomId + fileExt}`;
-          formData.append('images', file, newFileName)
-        })
-      })
-      if (formData.getAll('images').length > 0) {
-        this.uploadService.upload(formData).subscribe({
-          next: res => {
-            let images = res.map(img => environment.api_root + "/" + img)
-            if (this.product.id === 0) {
-              let request: CreateUpdateRequest = {
-                name: f.value.productName,
-                price: f.value.productPrice,
-                images: images,
-                categoryId: this.currentCategory.id,
-                variants: this.variantOptions
-              }
-              this.createNewProduct(request);
-            } else {
-              let productImage = this.product.images.map(img => img.src);
-              images.push(...productImage)
-              let request: CreateUpdateRequest = {
-                name: f.value.productName,
-                price: f.value.productPrice,
-                images: images,
-                categoryId: this.currentCategory.id,
-                variants: this.variantOptions
-              }
-              this.updateProduct(request)
-            }
-          },
-          error: () => {
-            alert("Lỗi không xác định")
-          }
-        })
-      } else {
-        let productImage = this.product.images.map(img => img.src);
-        let request: CreateUpdateRequest = {
-          name: f.value.productName,
-          price: f.value.productPrice,
-          images: productImage,
-          categoryId: this.currentCategory.id,
-          variants: this.variantOptions
-        }
-        this.updateProduct(request)
-      }
-
-    }
-
-  }
-
-  createNewProduct(request: CreateUpdateRequest) {
-    this.productService.createProduct(request).subscribe(() => {
-      this.router.navigateByUrl('/admin/products')
-    })
-  }
-
-  updateProduct(request: CreateUpdateRequest) {
-    this.productService.updateProduct(this.product.id, request).subscribe(()=>{
-      this.router.navigateByUrl('/admin/products')
-    })
   }
 
   onFilesSelected(event: any) {
@@ -244,5 +237,10 @@ export class AddProductComponent implements OnInit {
     })
     this.sizesControl.setValue(defaultSizes);
     this.colorsControl.setValue(defaultColors);
+  }
+
+  private generateOptionImage() {
+    this.optionImage.clear()
+    this.variantOptions.map(option => this.optionImage.add(option.color))
   }
 }

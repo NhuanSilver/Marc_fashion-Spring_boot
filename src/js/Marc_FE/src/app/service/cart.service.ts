@@ -6,6 +6,7 @@ import {BehaviorSubject, map, Observable, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Cart} from "../model/cart/Cart";
 import {ApiPath} from "../model/Enum/ApiPath";
+import {Role} from "../model/Enum/Role";
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,7 @@ export class CartService {
   }
 
   public getCart(): Observable<Cart> {
-    if (!this.storageService.getUser()) {
+    if (!this.storageService.getUser() || !this.storageService.getUser().authorities.includes(Role.USER)) {
       this.clearCart();
       return of(this.cart)
     }

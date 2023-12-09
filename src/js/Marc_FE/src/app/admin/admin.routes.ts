@@ -1,7 +1,7 @@
 import {AdminComponent} from "./admin.component";
 import {Routes} from "@angular/router";
 import {AdminProductComponent} from "./admin-product/admin-product.component";
-import {AddProductComponent} from "./add-product/add-product.component";
+import {EditProductComponent} from "./edit-product/edit-product.component";
 import {CanActiveGuard} from "./can-active.guard";
 export const adminRoutes : Routes = [
   {
@@ -9,8 +9,8 @@ export const adminRoutes : Routes = [
     children : [
       {path : '', component : AdminProductComponent},
       {path : 'products', component : AdminProductComponent},
-      {path : 'products/add', component : AddProductComponent},
-      {path : 'products/update/:id', component : AddProductComponent}
+      {path : 'products/add', component : EditProductComponent},
+      {path : 'products/update/:id', component : EditProductComponent}
     ],
     canActivate : [CanActiveGuard]
   }
