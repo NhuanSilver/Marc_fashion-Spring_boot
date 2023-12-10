@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -87,8 +86,6 @@ public class AuthenticationService implements IAuthenticationService {
 
     @Override
     public boolean isUsernameExisted(String username) {
-        Optional<User> user = userRepository.findById(username);
-        if (user.isPresent()) return true;
-        return false;
+        return userRepository.findById(username).isPresent();
     }
 }
