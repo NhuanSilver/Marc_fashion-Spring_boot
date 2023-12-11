@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {fromEvent, map, of, switchMap} from "rxjs";
+import {catchError, fromEvent, map, of, switchMap} from "rxjs";
 import {User} from "../../model/user/User";
 import {StorageService} from "../../service/storage.service";
 import {CartService} from "../../service/cart.service";
@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
     this.storageService.isAuthenticate
       .pipe(
         map(user => this.user = user),
-        switchMap(_=> this.cartService.getCart())
+        switchMap(_=> this.cartService.getCart()),
       ).subscribe()
   }
 

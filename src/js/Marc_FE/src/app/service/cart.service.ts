@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {StorageService} from "./storage.service";
 import {environment} from "../../environments/environment.development";
 import {Item} from "../model/cart/Item";
-import {BehaviorSubject, map, Observable, of} from "rxjs";
+import {BehaviorSubject, catchError, map, Observable, of} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Cart} from "../model/cart/Cart";
 import {ApiPath} from "../model/Enum/ApiPath";
@@ -43,6 +43,10 @@ export class CartService {
       return of(this.cart)
     }
     return this.http.get<Cart>(this.api_url + "/user").pipe(
+      catchError(_ => {
+        this.clearCart()
+        return of(this.cart)
+      }),
       map(cart => {
         this.cart = cart;
         this.notify();

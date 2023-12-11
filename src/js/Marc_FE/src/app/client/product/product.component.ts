@@ -5,7 +5,6 @@ import {PageProduct} from "../../model/product/PageProduct";
 import {SortType} from "../../model/product/SortType";
 import {FilterRequest} from "../../model/product/FilterRequest";
 import {SearchService} from "../../service/search.service";
-import {KeyValue} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {Category} from "../../model/category/category";
 import {CategoryService} from "../../service/category.service";
